@@ -22,7 +22,7 @@ const Modal = ({ onClose, children, langName }) => {
           </h3>
           <button
             onClick={onClose}
-            className='text-white bg-gray-400 hover:bg-gray-600 hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500'
+            className='text-black font-bold bg-gray-300 hover:bg-yellow-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:invert'
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'

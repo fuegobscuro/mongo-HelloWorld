@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('/api/programming-languages')
+      .get('programming-languages')
       .then((response) => {
         setLanguages(response.data);
       })

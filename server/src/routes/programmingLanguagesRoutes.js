@@ -3,7 +3,7 @@ const router = express.Router();
 const programmingLanguagesController = require('../controllers/programmingLanguagesController');
 
 router.get(
-  '/api/programming-languages',
+  '/programming-languages',
   programmingLanguagesController.getAllProgrammingLanguages
 );
 

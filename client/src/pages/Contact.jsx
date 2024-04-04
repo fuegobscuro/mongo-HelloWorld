@@ -10,8 +10,8 @@ const Contact = () => {
       style={mainContentStyle}
       className='bg-gray-100 dark:bg-gray-800 px-4 py-2 overflow-auto'
     >
-      <h1 className='text-center text-3xl font-semibold dark:text-white mt-2 mb-2'>
-        <b>Contact Us</b>
+      <h1 className='text-center text-3xl font-bold dark:text-white mt-2 mb-2'>
+        Contact Us
       </h1>
       <ContactForm />
       <div className='w-full flex justify-end pr-40 pt-4'>

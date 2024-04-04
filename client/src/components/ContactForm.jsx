@@ -3,11 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import {
-  validateEmail,
-  validateName,
-  validateMessage,
-} from '../utils/validations/formValidations';
+import { validateContactForm } from '../utils/validations/contactValidations';
 
 // Define MySwal with global configuration
 const MySwal = withReactContent(
@@ -28,39 +24,23 @@ const MySwal = withReactContent(
 );
 
 const ContactForm = () => {
-  const [contact, setContact] = useState({
-    name: '',
-    mail: '',
-    message: '',
-  });
-
+  const [contact, setContact] = useState({ name: '', mail: '', message: '' });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setContact({ ...contact, [e.target.name]: e.target.value });
     if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: null });
+      const updatedErrors = { ...errors };
+      delete updatedErrors[e.target.name];
+      setErrors(updatedErrors);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newErrors = {};
-    if (!validateName(contact.name)) {
-      newErrors.name = 'Please enter a valid name (1-50 characters).';
-    }
-
-    if (!validateEmail(contact.mail)) {
-      newErrors.mail = 'Please enter a valid email.';
-    }
-
-    if (!validateMessage(contact.message)) {
-      newErrors.message = 'Please enter a message (1-500 characters).';
-    }
-
-    // If there are any errors, update state and abort submission
+    const newErrors = validateContactForm(contact);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;

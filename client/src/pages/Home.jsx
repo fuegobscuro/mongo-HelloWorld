@@ -126,15 +126,15 @@ function Home({
             </div>
             {language.codeDevicon ? (
               <i
-                className={`devicon-${language.codeDevicon}-plain colored absolute right-5 top-3 text-5xl p-1 dark:invert`}
+                className={`devicon-${language.codeDevicon}-plain colored absolute right-5 top-3 text-5xl p-1 drop-shadow-md dark:invert`}
               ></i>
             ) : (
               <img
-                height='48'
-                width='48'
+                height='58'
+                width='58'
                 src={language.codeSimpleIcons}
                 alt={`${language.name} icon`}
-                className='plain colored absolute right-5 top-3 text-5xl p-1 dark:invert'
+                className='plain colored absolute right-5 top-3 text-5xl p-1 drop-shadow-md dark:invert'
               />
             )}
           </div>
