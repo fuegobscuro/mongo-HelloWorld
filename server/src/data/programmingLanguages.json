@@ -1,0 +1,362 @@
+[
+  {
+    "name": "C",
+    "year": "1972",
+    "creator": "Dennis Ritchie",
+    "description": "C is a general-purpose, procedural computer programming language supporting structured programming, lexical variable scope, and recursion, with a static type system.",
+    "helloWorldCode": "printf(\"Hello, World!\");",
+    "codeLang": "c",
+    "codeDevicon": "c",
+    "tiobeRank": "2"
+  },
+  {
+    "name": "Java",
+    "year": "1995",
+    "creator": "James Gosling",
+    "description": "Java is a general-purpose, class-based, object-oriented programming language designed to have as few implementation dependencies as possible.",
+    "helloWorldCode": "public class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}",
+    "codeLang": "java",
+    "codeDevicon": "java",
+    "tiobeRank": "4"
+  },
+  {
+    "name": "Python",
+    "year": "1991",
+    "creator": "Guido van Rossum",
+    "description": "Python is an interpreted, high-level, general-purpose programming language.",
+    "helloWorldCode": "print(\"Hello, World!\")",
+    "codeLang": "python",
+    "codeDevicon": "python",
+    "tiobeRank": "1"
+  },
+  {
+    "name": "C++",
+    "year": "1985",
+    "creator": "Bjarne Stroustrup",
+    "description": "C++ is a general-purpose programming language created as an extension of C, providing object-oriented programming features such as classes and other enhancements.",
+    "helloWorldCode": "#include <iostream>\n\nint main() {\n    std::cout << \"Hello, World!\";\n    return 0;\n}",
+    "codeLang": "cpp",
+    "codeDevicon": "cplusplus",
+    "tiobeRank": "3"
+  },
+  {
+    "name": "C#",
+    "year": "2000",
+    "creator": "Microsoft",
+    "description": "C# is a general-purpose language encompassing strong typing, lexically scoped, imperative, declarative, functional, generic, object-oriented, and component-oriented programming disciplines.",
+    "helloWorldCode": "using System;\n\nclass HelloWorld {\n    static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}",
+    "codeLang": "csharp",
+    "codeDevicon": "csharp",
+    "tiobeRank": "5"
+  },
+  {
+    "name": "JavaScript",
+    "year": "1995",
+    "creator": "Brendan Eich",
+    "description": "JavaScript is a high-level, interpreted programming language that conforms to the ECMAScript specification.",
+    "helloWorldCode": "console.log(\"Hello, World!\");",
+    "codeLang": "javascript",
+    "codeDevicon": "javascript",
+    "tiobeRank": "6"
+  },
+  {
+    "name": "Ruby",
+    "year": "1995",
+    "creator": "Yukihiro Matsumoto",
+    "description": "Ruby is an interpreted, high-level, general-purpose programming language.",
+    "helloWorldCode": "puts \"Hello, World!\"",
+    "codeLang": "ruby",
+    "codeDevicon": "ruby",
+    "tiobeRank": "18"
+  },
+  {
+    "name": "Go",
+    "year": "2009",
+    "creator": "Robert Griesemer, Rob Pike, Ken Thompson",
+    "description": "Go is a statically typed, compiled language in the tradition of statically typed languages such as C and C++.",
+    "helloWorldCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}",
+    "codeLang": "go",
+    "codeDevicon": "go",
+    "tiobeRank": "8"
+  },
+  {
+    "name": "Rust",
+    "year": "2010",
+    "creator": "Graydon Hoare",
+    "description": "Rust is a multi-paradigm system programming language focused on safety, especially safe concurrency.",
+    "helloWorldCode": "fn main() {\n    println!(\"Hello, World!\");\n}",
+    "codeLang": "rust",
+    "codeDevicon": "rust",
+    "tiobeRank": "17"
+  },
+  {
+    "name": "Swift",
+    "year": "2014",
+    "creator": "Apple Inc.",
+    "description": "Swift is a general-purpose, multi-paradigm, compiled programming language developed by Apple Inc.",
+    "helloWorldCode": "import Swift\n\nprint(\"Hello, World!\")",
+    "codeLang": "swift",
+    "codeDevicon": "swift",
+    "tiobeRank": "16"
+  },
+  {
+    "name": "Kotlin",
+    "year": "2011",
+    "creator": "JetBrains",
+    "description": "Kotlin is a cross-platform, statically typed, general-purpose programming language with type inference.",
+    "helloWorldCode": "fun main() {\n    println(\"Hello, World!\")\n}",
+    "codeLang": "kotlin",
+    "codeDevicon": "kotlin",
+    "tiobeRank": "19"
+  },
+  {
+    "name": "PHP",
+    "year": "1995",
+    "creator": "Rasmus Lerdorf",
+    "description": "PHP is a general-purpose scripting language especially suited to web development.",
+    "helloWorldCode": "<?php\n\necho \"Hello, World!\";\n?>",
+    "codeLang": "php",
+    "codeDevicon": "php",
+    "tiobeRank": "12"
+  },
+  {
+    "name": "R",
+    "year": "1993",
+    "creator": "Ross Ihaka, Robert Gentleman",
+    "description": "R is a programming language and free software environment for statistical computing and graphics.",
+    "helloWorldCode": "cat(\"Hello, World!\")",
+    "codeLang": "r",
+    "codeDevicon": "r",
+    "tiobeRank": "21"
+  },
+  {
+    "name": "Objective-C",
+    "year": "1984",
+    "creator": "Brad Cox, Tom Love",
+    "description": "Objective-C is a general-purpose, object-oriented programming language that adds Smalltalk-style messaging to the C programming language.",
+    "helloWorldCode": "#import <Foundation/Foundation.h>\n\nint main() {\n    @autoreleasepool {\n        NSLog(@\"Hello, World!\");\n    }\n    return 0;\n}",
+    "codeLang": "objectivec",
+    "codeDevicon": "objectivec",
+    "tiobeRank": "35"
+  },
+  {
+    "name": "Perl",
+    "year": "1987",
+    "creator": "Larry Wall",
+    "description": "Perl is a family of two high-level, general-purpose, interpreted, dynamic programming languages.",
+    "helloWorldCode": "print \"Hello, World!\\n\";",
+    "codeLang": "perl",
+    "codeDevicon": "perl",
+    "tiobeRank": "29"
+  },
+  {
+    "name": "TypeScript",
+    "year": "2012",
+    "creator": "Microsoft",
+    "description": "TypeScript is a programming language developed and maintained by Microsoft.",
+    "helloWorldCode": "console.log(\"Hello, World!\");",
+    "codeLang": "typescript",
+    "codeDevicon": "typescript",
+    "tiobeRank": "38"
+  },
+  {
+    "name": "Scala",
+    "year": "2003",
+    "creator": "Martin Odersky",
+    "description": "Scala is a general-purpose programming language providing support for functional programming and a strong static type system.",
+    "helloWorldCode": "object HelloWorld {\n    def main(args: Array[String]): Unit = {\n        println(\"Hello, World!\")\n    }\n}",
+    "codeLang": "scala",
+    "codeDevicon": "scala",
+    "tiobeRank": "34"
+  },
+  {
+    "name": "Lua",
+    "year": "1993",
+    "creator": "Roberto Ierusalimschy, Waldemar Celes, Luiz Henrique de Figueiredo",
+    "description": "Lua is a lightweight, high-level, multi-paradigm programming language designed primarily for embedded use in applications.",
+    "helloWorldCode": "print(\"Hello, World!\")",
+    "codeLang": "lua",
+    "codeDevicon": "lua",
+    "tiobeRank": "27"
+  },
+  {
+    "name": "Haskell",
+    "year": "1990",
+    "creator": "Simon Peyton Jones",
+    "description": "Haskell is a standardized, general-purpose, statically typed, purely functional programming language.",
+    "helloWorldCode": "main = putStrLn \"Hello, World!\"",
+    "codeLang": "haskell",
+    "codeDevicon": "haskell",
+    "tiobeRank": "30"
+  },
+  {
+    "name": "Julia",
+    "year": "2012",
+    "creator": "Jeff Bezanson, Stefan Karpinski, Viral B. Shah, Alan Edelman",
+    "description": "Julia is a high-level, high-performance programming language for technical computing.",
+    "helloWorldCode": "println(\"Hello, World!\")",
+    "codeLang": "julia",
+    "codeDevicon": "julia",
+    "tiobeRank": "37"
+  },
+  {
+    "name": "Groovy",
+    "year": "2003",
+    "creator": "James Strachan",
+    "description": "Groovy is an object-oriented programming language for the Java platform.",
+    "helloWorldCode": "println \"Hello, World!\"",
+    "codeLang": "groovy",
+    "codeDevicon": "groovy",
+    "tiobeRank": "70"
+  },
+  {
+    "name": "Elixir",
+    "year": "2011",
+    "creator": "José Valim",
+    "description": "Elixir is a functional, concurrent, general-purpose programming language that runs on the Erlang virtual machine.",
+    "helloWorldCode": "IO.puts \"Hello, World!\"",
+    "codeLang": "elixir",
+    "codeDevicon": "elixir",
+    "tiobeRank": "69"
+  },
+  {
+    "name": "Dart",
+    "year": "2011",
+    "creator": "Google",
+    "description": "Dart is a general-purpose programming language originally developed by Google and later approved as a standard by ECMA.",
+    "helloWorldCode": "void main() {\n    print(\"Hello, World!\");\n}",
+    "codeLang": "dart",
+    "codeDevicon": "dart",
+    "tiobeRank": "32"
+  },
+  {
+    "name": "MATLAB",
+    "year": "1984",
+    "creator": "Cleve Moler",
+    "description": "MATLAB is a proprietary multi-paradigm programming language and numeric computing environment.",
+    "helloWorldCode": "fprintf('Hello, World!\\n')",
+    "codeLang": "matlab",
+    "codeDevicon": "matlab",
+    "tiobeRank": "13"
+  },
+  {
+    "name": "CoffeeScript",
+    "year": "2009",
+    "creator": "Jeremy Ashkenas",
+    "description": "CoffeeScript is a programming language that transcompiles to JavaScript.",
+    "helloWorldCode": "console.log \"Hello, World!\"",
+    "codeLang": "coffeescript",
+    "codeDevicon": "coffeescript",
+    "tiobeRank": "101"
+  },
+  {
+    "name": "Visual Basic",
+    "year": "1991",
+    "creator": "Microsoft",
+    "description": "Visual Basic is a third-generation event-driven programming language from Microsoft for its Component Object Model programming model.",
+    "helloWorldCode": "Module HelloWorld\n    Sub Main()\n        Console.WriteLine(\"Hello, World!\")\n    End Sub\nEnd Module",
+    "codeLang": "vb",
+    "codeDevicon": "visualbasic",
+    "tiobeRank": "10"
+  },
+  {
+    "name": "PowerShell",
+    "year": "2006",
+    "creator": "Microsoft",
+    "description": "PowerShell is a task automation and configuration management framework from Microsoft, consisting of a command-line shell and the associated scripting language.",
+    "helloWorldCode": "Write-Host \"Hello, World!\"",
+    "codeLang": "powershell",
+    "codeDevicon": "powershell",
+    "tiobeRank": "44"
+  },
+  {
+    "name": "SQL",
+    "year": "1974",
+    "creator": "Donald D. Chamberlin, Raymond F. Boyce",
+    "description": "SQL (Structured Query Language) is a domain-specific language used in programming and designed for managing data held in a relational database management system.",
+    "helloWorldCode": "SELECT 'Hello, World!';",
+    "codeLang": "sql",
+    "codeDevicon": "azuresqldatabase",
+    "tiobeRank": "7"
+  },
+  {
+    "name": "Scratch",
+    "year": "2007",
+    "creator": "MIT Media Lab",
+    "description": "Scratch is a block-based visual programming language primarily targeted at children to help learn code using visual blocks that represent code concepts.",
+    "helloWorldCode": "When green flag clicked\nsay 'Hello, World!' for 2 seconds",
+    "codeLang": "scratch",
+    "codeSimpleIcons": "https://cdn.simpleicons.org/scratch/#4D97FF",
+    "tiobeRank": "9"
+  },
+  {
+    "name": "Assembly language",
+    "year": "1949",
+    "creator": "Kathleen Booth",
+    "description": "Assembly language is a low-level programming language for computers, microprocessors, microcontrollers, and other programmable devices.",
+    "helloWorldCode": "section .data\nmsg db 'Hello, World!',0xa\nlen equ $ - msg\nsection .text\nglobal _start\n_start:\nmov edx,len\nmov ecx,msg\nmov ebx,1\nmov eax,4\nint 0x80\nmov eax,1\nint 0x80",
+    "codeLang": "assembly",
+    "codeSimpleIcons": "https://www.svgrepo.com/show/373445/assembly.svg",
+    "tiobeRank": "11"
+  },
+  {
+    "name": "Fortran",
+    "year": "1957",
+    "creator": "John Backus",
+    "description": "Fortran (Formula Translation) is a high-level language designed for numerical and scientific computing.",
+    "helloWorldCode": "PROGRAM Hello\nPRINT *, 'Hello, World!'\nEND PROGRAM Hello",
+    "codeLang": "fortran",
+    "codeSimpleIcons": "https://cdn.simpleicons.org/fortran/#734F96",
+    "tiobeRank": "14"
+  },
+  {
+    "name": "Delphi/Object Pascal",
+    "year": "1995",
+    "creator": "Borland",
+    "description": "Delphi/Object Pascal is an object-oriented version of the Pascal language, known for its rapid application development capabilities.",
+    "helloWorldCode": "program HelloWorld;\nbegin\n  WriteLn('Hello, World!');\nend.",
+    "codeLang": "delphi",
+    "codeSimpleIcons": "https://cdn.simpleicons.org/delphi/#E62431",
+    "tiobeRank": "15"
+  },
+  {
+    "name": "COBOL",
+    "year": "1959",
+    "creator": "CODASYL, Jean E. Sammet",
+    "description": "COBOL (Common Business-Oriented Language) is a high-level programming language for business applications. It is known for its clear syntax and ability to handle large data processing operations.",
+    "helloWorldCode": "IDENTIFICATION DIVISION.\nPROGRAM-ID. Hello.\nPROCEDURE DIVISION.\n    DISPLAY 'Hello, World!'.\nSTOP RUN.",
+    "codeLang": "cobol",
+    "codeSimpleIcons": "https://iconduck.com/api/v2/vectors/vctrl30yc1bf/media/png/1024/download",
+    "tiobeRank": "20"
+  },
+  {
+    "name": "D",
+    "year": "2001",
+    "creator": "Walter Bright",
+    "description": "D is a general-purpose programming language with static typing, systems-level access, and C-like syntax. It combines efficiency, control, and modeling power with safety and programmer productivity.",
+    "helloWorldCode": "import std.stdio;\n\nvoid main() {\n    writeln('Hello, World!');\n}",
+    "codeLang": "d",
+    "codeSimpleIcons": "https://cdn.simpleicons.org/d/#B03931",
+    "tiobeRank": "23"
+  },
+  {
+    "name": "F#",
+    "year": "2005",
+    "creator": "Don Syme, Microsoft",
+    "description": "F# is a functional-first, general-purpose programming language that also allows for imperative and object-oriented programming. It's known for strong typing, succinct syntax, and integration with the .NET framework.",
+    "helloWorldCode": "open System\n[<EntryPoint>]\nlet main argv = \n    printfn \"Hello, World!\"\n    0",
+    "codeLang": "fsharp",
+    "codeSimpleIcons": "https://cdn.simpleicons.org/fsharp/#378BBA",
+    "tiobeRank": "25"
+  },
+  {
+    "name": "Bash",
+    "year": "1989",
+    "creator": "Brian Fox",
+    "description": "Bash is a Unix shell and command language written for the GNU Project as a free software replacement for the Bourne shell. It has been widely adopted as the default shell for most Linux distributions and macOS.",
+    "helloWorldCode": "echo \"Hello, World!\"",
+    "codeLang": "bash",
+    "codeSimpleIcons": "https://cdn.simpleicons.org/gnubash/#4EAA25",
+    "tiobeRank": "50"
+  }
+]
