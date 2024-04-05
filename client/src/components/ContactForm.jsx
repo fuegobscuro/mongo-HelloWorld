@@ -75,7 +75,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className='max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-2xl rounded-lg p-6'>
+    <div className='max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-2xl dark:shadow-black rounded-lg p-6'>
       <form onSubmit={handleSubmit} className='space-y-4'>
         {/* Name input */}
         <div>
@@ -87,7 +87,7 @@ const ContactForm = () => {
             name='name'
             value={contact.name}
             onChange={handleChange}
-            className={`h-8 mt-1 pl-2 block w-full rounded-md border-gray-300 shadow-lg focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white ${
+            className={`h-8 mt-1 pl-2 block w-full rounded-md border-gray-300 shadow-sm border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white ${
               errors.name ? 'border-red-500' : ''
             }`}
           />
@@ -106,7 +106,7 @@ const ContactForm = () => {
             name='mail'
             value={contact.mail}
             onChange={handleChange}
-            className={`h-8 mt-1 pl-2 block w-full rounded-md border-gray-300 shadow-lg focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white ${
+            className={`h-8 mt-1 pl-2 block w-full rounded-md border-gray-300 shadow-sm border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white ${
               errors.mail ? 'border-red-500' : ''
             }`}
           />
@@ -124,7 +124,7 @@ const ContactForm = () => {
             name='message'
             value={contact.message}
             onChange={handleChange}
-            className={`mt-1 pl-2 h-44 resize-none block w-full rounded-md border-gray-300 shadow-lg focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white ${
+            className={`mt-1 pl-2 h-44 resize-none block w-full rounded-md border-gray-300 shadow-sm border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white ${
               errors.message ? 'border-red-500' : ''
             }`}
           ></textarea>
@@ -137,7 +137,7 @@ const ContactForm = () => {
         <div className='w-full flex justify-end pt-2'>
           <button
             type='submit'
-            className='bg-gray-300 hover:bg-yellow-200 text-black font-bold py-2 px-4 rounded dark:invert'
+            className='bg-gray-300 drop-shadow-sm hover:bg-yellow-200 text-black font-bold py-2 px-4 rounded dark:invert'
           >
             Submit
           </button>

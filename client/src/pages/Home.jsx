@@ -12,17 +12,24 @@ function Home({
   currentLangName,
   openModalWithCode,
 }) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedPage = localStorage.getItem('currentPage');
+    return savedPage ? Number(savedPage) : 1;
+  });
+  const [sortOrder, setSortOrder] = useState(() => {
+    const savedSortOrder = localStorage.getItem('sortOrder');
+    return savedSortOrder || 'TIOBE Ranking';
+  });
   const itemsPerPage = 6;
-  const [sortOrder, setSortOrder] = useState('TIOBE Ranking');
   const [sortedLanguages, setSortedLanguages] = useState([]);
 
   useEffect(() => {
-    setSortedLanguages(languages);
-  }, [languages]);
+    document.title = 'Hello World Compendium';
+  }, []);
 
+  // Effect for fetching languages based on sortOrder and storing sorted languages
   useEffect(() => {
-    const sortLanguages = [...languages].sort((a, b) => {
+    const handleSortChange = [...languages].sort((a, b) => {
       switch (sortOrder) {
         case 'A-Z':
           return a.name.localeCompare(b.name);
@@ -38,8 +45,18 @@ function Home({
           return 0;
       }
     });
-    setSortedLanguages(sortLanguages);
+    setSortedLanguages(handleSortChange);
   }, [sortOrder, languages]);
+
+  // Effect for updating currentPage in localStorage
+  useEffect(() => {
+    localStorage.setItem('currentPage', currentPage.toString());
+  }, [currentPage]);
+
+  // Effect for updating sortOrder in localStorage
+  useEffect(() => {
+    localStorage.setItem('sortOrder', sortOrder);
+  }, [sortOrder]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -50,51 +67,53 @@ function Home({
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const sortLanguages = (newSortOrder) => {
+  const handleSortChange = (newSortOrder) => {
     setSortOrder(newSortOrder);
-    setCurrentPage(1); // Reset to page 1 on sort
+    setCurrentPage(1); // Reset to page 1 on sort to avoid confusion with pagination
   };
 
+  const mainContentStyle = { minHeight: 'calc(100vh - 60px)' };
+
   return (
-    <div className='container mx-auto p-4 bg-gray-100'>
+    <div className='container mx-auto p-4 bg-gray-100' style={mainContentStyle}>
       <div className='mb-4 text-center'>
         <span class='text-lg font-medium'>
-          <b class='text-xl font-bold text-indigo-800 dark:text-emerald-600'>
+          <b class='text-xl font-bold text-indigo-800 drop-shadow-sm dark:text-emerald-700'>
             Sort by:
           </b>
         </span>
         <button
-          onClick={() => sortLanguages('A-Z')}
-          className='mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          onClick={() => handleSortChange('A-Z')}
+          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           A-Z
         </button>
         <button
-          onClick={() => sortLanguages('Z-A')}
-          className='mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          onClick={() => handleSortChange('Z-A')}
+          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           Z-A
         </button>
         <button
-          onClick={() => sortLanguages('Newest')}
-          className='mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          onClick={() => handleSortChange('Newest')}
+          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           Newest
         </button>
         <button
-          onClick={() => sortLanguages('Oldest')}
-          className='mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          onClick={() => handleSortChange('Oldest')}
+          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           Oldest
         </button>
         <button
-          onClick={() => sortLanguages('TIOBE Ranking')}
-          className='mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          onClick={() => handleSortChange('TIOBE Ranking')}
+          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           TIOBE Ranking
         </button>
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 '>
         {currentLanguages.map((language) => (
           <div
             key={language._id}
@@ -108,7 +127,7 @@ function Home({
             className='relative card bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 shadow-lg rounded-lg p-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 overflow-hidden flex flex-col h-[235px] justify-between'
           >
             <div>
-              <h2 className='font-bold text-xl mb-2 text-indigo-800 dark:text-emerald-300'>
+              <h2 className='font-bold text-xl mb-2 text-indigo-800 dark:text-emerald-400'>
                 {language.name}
               </h2>
               <p className='mb-0.5'>
@@ -141,11 +160,11 @@ function Home({
         ))}
       </div>{' '}
       <footer className='mt-4'>
-        <div className='pagination flex justify-center items-center gap-2 text-indigo-800 dark:text-emerald-700'>
+        <div className='pagination flex justify-center items-center gap-2.5 text-indigo-800 drop-shadow-sm dark:text-emerald-700'>
           {currentPage > 1 && (
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
-              className='font-semibold'
+              className='font-semibold drop-shadow-sm'
             >
               &laquo; Back
             </button>
@@ -157,7 +176,9 @@ function Home({
                 key={i}
                 onClick={() => paginate(i + 1)}
                 className={`${
-                  currentPage === i + 1 ? 'font-bold text-lg' : 'text-base'
+                  currentPage === i + 1
+                    ? 'font-bold text-lg drop-shadow-sm'
+                    : 'text-base drop-shadow-sm'
                 }`}
               >
                 {i + 1}
@@ -167,7 +188,7 @@ function Home({
           {currentPage < Math.ceil(languages.length / itemsPerPage) && (
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
-              className='font-semibold'
+              className='font-semibold drop-shadow-sm'
             >
               &raquo; Next
             </button>

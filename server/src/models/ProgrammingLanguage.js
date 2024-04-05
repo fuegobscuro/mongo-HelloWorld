@@ -10,6 +10,7 @@ const programmingLanguageSchema = new mongoose.Schema({
   codeLang: String, // Code for syntax highlighting of the programming language
   codeDevicon: String, // Code name used for Devicon's icon
   codeSimpleIcons: String, // URL for Simple Icon's icon if there's no codeDevicon
+  isActive: { type: Boolean, default: true },
 });
 
 const ProgrammingLanguage = mongoose.model(
