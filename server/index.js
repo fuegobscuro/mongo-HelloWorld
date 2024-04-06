@@ -1,7 +1,8 @@
 const connectDB = require('./src/database');
 const server = require('./src/server');
 const seedDB = require('./src/data/seedDB');
-const PORT = process.env.PORT || 3001;
+require('dotenv').config();
+const PORT = process.env.PORT;
 
 const startServer = () => {
   server.listen(PORT, () => {
