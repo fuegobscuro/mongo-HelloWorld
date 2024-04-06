@@ -16,38 +16,40 @@ const Navbar = () => {
     <nav className={`${navbarClasses} p-4 flex justify-between items-center `}>
       <Link to='/' title='Return Home'>
         <div className='flex items-center'>
-          <div className='mr-4'>👋🌍</div>
-          <span className='font-semibold text-xl'>Hello World Compendium</span>
+          <div className='px-2 text-xl'>👋🌍</div>
+          <span className='px-2 font-extrabold text-xl'>
+            Hello World Compendium
+          </span>
         </div>
       </Link>
 
       {location.pathname === '/' && (
         <div className='flex items-center'>
-          <span className='font-semibold text-indigo-800 dark:text-emerald-400'>
+          <span className='font-semibold text-lg text-indigo-800 dark:text-emerald-500'>
             Click a programming language for a "Hello, World!" example! 👇
-          </span>
-        </div>
-      )}
-
-      {location.pathname === '/about' && (
-        <div className='flex items-center'>
-          <span className='font-semibold text-indigo-800 dark:text-emerald-500'>
-            About the project and the developer! 👨‍💻
           </span>
         </div>
       )}
 
       {location.pathname === '/contact' && (
         <div className='flex items-center'>
-          <span className='font-semibold text-indigo-800 dark:text-emerald-500'>
+          <span className='font-semibold text-lg text-indigo-800 dark:text-emerald-500'>
             Get in touch... Send me a message! 📩
+          </span>
+        </div>
+      )}
+
+      {location.pathname === '/about' && (
+        <div className='flex items-center'>
+          <span className='font-semibold text-lg text-indigo-800 dark:text-emerald-500'>
+            About the project and the developer! 👨‍💻
           </span>
         </div>
       )}
 
       {location.pathname === '/admin' && (
         <div className='flex items-center'>
-          <span className='font-semibold text-indigo-800 dark:text-emerald-500'>
+          <span className='font-semibold text-lg text-indigo-800 dark:text-emerald-500'>
             Super secret login page for admins! 🤐
           </span>
         </div>
@@ -56,20 +58,20 @@ const Navbar = () => {
       <div>
         <Link
           to='/contact'
-          className='font-semibold mr-4 hover:text-gray-300 dark:hover:text-gray-600'
+          className='font-semibold text-lg px-2 hover:text-gray-300'
         >
           Contact
         </Link>
         <Link
           to='/about'
-          className='font-semibold mr-4 hover:text-gray-300 dark:hover:text-gray-600'
+          className='font-semibold text-lg px-2 hover:text-gray-300'
         >
           About
         </Link>
         <button
           title='Toggle Light/Dark Mode'
           onClick={toggleTheme}
-          className='ml-4'
+          className='px-2 text-lg'
         >
           {icon}
         </button>

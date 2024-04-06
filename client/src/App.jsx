@@ -41,8 +41,6 @@ function App() {
     <Provider store={store}>
       <Router>
         <SessionChecker>
-          {' '}
-          {/* Wrap SessionChecker around components that need to wait for the session check */}
           <Navbar />
           <Routes>
             <Route

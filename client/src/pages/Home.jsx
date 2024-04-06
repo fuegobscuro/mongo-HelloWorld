@@ -78,37 +78,37 @@ function Home({
     <div className='container mx-auto p-4 bg-gray-100' style={mainContentStyle}>
       <div className='mb-4 text-center'>
         <span class='text-lg font-medium'>
-          <b class='text-xl font-bold text-indigo-800 drop-shadow-sm dark:text-emerald-700'>
+          <b class='text-xl mx-1 font-bold text-indigo-800 drop-shadow-sm dark:text-emerald-700'>
             Sort by:
           </b>
         </span>
         <button
           onClick={() => handleSortChange('A-Z')}
-          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          className='drop-shadow-sm mx-1 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           A-Z
         </button>
         <button
           onClick={() => handleSortChange('Z-A')}
-          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          className='drop-shadow-sm mx-1 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           Z-A
         </button>
         <button
           onClick={() => handleSortChange('Newest')}
-          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          className='drop-shadow-sm mx-1 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           Newest
         </button>
         <button
           onClick={() => handleSortChange('Oldest')}
-          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          className='drop-shadow-sm mx-1 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           Oldest
         </button>
         <button
           onClick={() => handleSortChange('TIOBE Ranking')}
-          className='drop-shadow-sm mx-2 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
+          className='drop-shadow-sm mx-1 bg-gray-300 hover:bg-yellow-200 text-black p-2 rounded text-center dark:invert'
         >
           TIOBE Ranking
         </button>
@@ -127,7 +127,7 @@ function Home({
             className='relative card bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 shadow-lg rounded-lg p-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 overflow-hidden flex flex-col h-[235px] justify-between'
           >
             <div>
-              <h2 className='font-bold text-xl mb-2 text-indigo-800 dark:text-emerald-400'>
+              <h2 className='font-bold text-2xl mb-2 text-indigo-800 dark:text-emerald-500'>
                 {language.name}
               </h2>
               <p className='mb-0.5'>
@@ -158,13 +158,13 @@ function Home({
             )}
           </div>
         ))}
-      </div>{' '}
+      </div>
       <footer className='mt-4'>
         <div className='pagination flex justify-center items-center gap-2.5 text-indigo-800 drop-shadow-sm dark:text-emerald-700'>
           {currentPage > 1 && (
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
-              className='font-semibold drop-shadow-sm'
+              className='font-semibold text-lg drop-shadow-sm'
             >
               &laquo; Back
             </button>
@@ -177,8 +177,8 @@ function Home({
                 onClick={() => paginate(i + 1)}
                 className={`${
                   currentPage === i + 1
-                    ? 'font-bold text-lg drop-shadow-sm'
-                    : 'text-base drop-shadow-sm'
+                    ? 'font-bold text-xl drop-shadow-sm'
+                    : 'text-lg drop-shadow-sm'
                 }`}
               >
                 {i + 1}
@@ -188,7 +188,7 @@ function Home({
           {currentPage < Math.ceil(languages.length / itemsPerPage) && (
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
-              className='font-semibold drop-shadow-sm'
+              className='font-semibold text-lg drop-shadow-sm'
             >
               &raquo; Next
             </button>

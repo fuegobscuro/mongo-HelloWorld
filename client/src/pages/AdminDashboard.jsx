@@ -31,7 +31,11 @@ function AdminDashboard() {
         dispatch(setUnauthenticated()); // Dispatch action to update state
         navigate('/admin');
       })
-      .catch((error) => console.error('Logout failed', error));
+      .catch((error) => {
+        console.error('Logout failed', error);
+        dispatch(setUnauthenticated());
+        navigate('/admin');
+      });
   };
 
   const handleDelete = (id) => {

@@ -12,6 +12,6 @@ const {
 
 router.post('/login', checkNotAuthenticated, login);
 router.get('/logout', isAuthenticated, logout);
-router.get('/session', isAuthenticated, getSessionInfo);
+router.get('/session', getSessionInfo);
 
 module.exports = router;

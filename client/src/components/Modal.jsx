@@ -16,7 +16,7 @@ const Modal = ({ onClose, children, langName }) => {
       >
         <div className='flex justify-between items-center mb-4'>
           <h3 className='text-lg leading-6 font-medium'>
-            Here's a <b>'Hello World'</b> in{' '}
+            Here's a <b>'Hello, World!'</b> in{' '}
             <b className='text-indigo-800 dark:text-emerald-600'>{langName}</b>{' '}
             !
           </h3>
