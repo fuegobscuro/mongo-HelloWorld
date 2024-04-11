@@ -5,13 +5,13 @@ const MySwal = withReactContent(
   Swal.mixin({
     customClass: {
       container: 'max-w-xl mx-auto',
-      popup: 'bg-white dark:bg-gray-800 rounded-lg drop-shadow-2xl shadow-2xl',
-      title: 'text-gray-800 dark:text-white text-lg font-bold',
+      popup: 'bg-green-50 dark:bg-gray-700 shadow-md drop-shadow-md rounded-lg',
+      title: 'text-black dark:text-white text-lg font-bold',
       content: 'text-gray-600 dark:text-gray-200 text-sm shadow-2xl',
       confirmButton:
-        'bg-gray-300 hover:bg-yellow-200 text-black font-bold py-2 px-4 mr-1 drop-shadow-md rounded dark:invert',
+        'bg-emerald-400 hover:bg-emerald-300 text-black font-bold py-2 px-4 mr-1 drop-shadow-sm shadow-sm rounded-md dark:text-white dark:bg-emerald-800 dark:hover:bg-emerald-700',
       cancelButton:
-        'bg-gray-300 hover:bg-red-300 text-black font-bold py-2 px-4 ml-1 drop-shadow-md rounded dark:invert dark:hover:bg-green-300',
+        'bg-red-400 hover:bg-red-300 text-black font-bold py-2 px-4 mr-1 drop-shadow-sm shadow-sm rounded-md dark:text-white dark:bg-red-800 dark:hover:bg-red-700',
     },
     buttonsStyling: false,
     backdrop: false,
@@ -21,4 +21,4 @@ const MySwal = withReactContent(
 export default MySwal;
 
 // For message after succesful confirmation in dark mode:
-// html: '<span class="text-gray-300">Your message has been sent.</span>',
+// html: '<span class="text-gray-400">Your message has been sent.</span>',

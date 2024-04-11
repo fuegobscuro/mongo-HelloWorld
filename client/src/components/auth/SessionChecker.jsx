@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAuthenticated, setUnauthenticated } from '../redux/actions';
+import { setAuthenticated, setUnauthenticated } from '../../redux/actions';
 import axios from 'axios';
+import LoadingAnimation from '../common/LoadingAnimation';
 
 const SessionChecker = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -26,7 +27,7 @@ const SessionChecker = ({ children }) => {
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>; // Or some loading indicator
+    return <LoadingAnimation />;
   }
 
   return children;

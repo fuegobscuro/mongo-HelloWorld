@@ -2,7 +2,7 @@ const Contact = require('../models/Contact');
 const { validateContactForm } = require('../validations/contactValidations');
 
 // GET ALL CONTACT FORM MESSAGES
-exports.getAllContacts = async (req, res) => {
+exports.getAllContactMessages = async (req, res) => {
   try {
     const contacts = await Contact.find({});
     res.json(contacts);

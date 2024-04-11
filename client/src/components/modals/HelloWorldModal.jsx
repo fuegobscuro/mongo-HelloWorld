@@ -1,28 +1,25 @@
 import React from 'react';
-import { useTheme } from '../components/ThemeContext';
 
-const Modal = ({ onClose, children, langName }) => {
-  const { theme } = useTheme();
-  const modalClasses =
-    theme === 'dark'
-      ? 'bg-gray-800 text-white' // Dark mode styles
-      : 'bg-white text-gray-900'; // Light mode styles
-
+const HelloWorldModal = ({ onClose, children, langName }) => {
   return (
     <div className='fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center'>
       <div
-        className={`${modalClasses} relative mx-auto p-5 border shadow-lg rounded-md`}
+        className={
+          'relative mx-auto p-5 border-2 border-gray-600 bg-green-100 dark:bg-gray-800 shadow-md drop-shadow-md rounded-lg'
+        }
         style={{ width: '80%', maxWidth: '640px' }}
       >
-        <div className='flex justify-between items-center mb-4'>
-          <h3 className='text-lg leading-6 font-medium'>
+        <div className='flex justify-between items-center mb-1'>
+          <h3 className='text-lg leading-6 font-medium text-gray-900 dark:text-white'>
             Here's a <b>'Hello, World!'</b> in{' '}
-            <b className='text-indigo-800 dark:text-emerald-600'>{langName}</b>{' '}
+            <b className='text-indigo-800 text-xl dark:text-emerald-600'>
+              {langName}
+            </b>{' '}
             !
           </h3>
           <button
             onClick={onClose}
-            className='text-black font-bold bg-gray-300 hover:bg-yellow-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:invert'
+            className='text-black font-bold bg-emerald-400 hover:bg-emerald-300 rounded-lg text-sm p-1 ml-auto inline-flex items-center drop-shadow-sm shadow-sm dark:bg-blue-800 dark:text-white dark:hover:bg-blue-700'
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -40,7 +37,10 @@ const Modal = ({ onClose, children, langName }) => {
             </svg>
           </button>
         </div>
-        <div className='mt-2 overflow-auto' style={{ maxHeight: '80vh' }}>
+        <div
+          className='mt-1 overflow-auto drop-shadow-sm'
+          style={{ maxHeight: '80vh' }}
+        >
           {children}
         </div>
       </div>
@@ -48,4 +48,4 @@ const Modal = ({ onClose, children, langName }) => {
   );
 };
 
-export default Modal;
+export default HelloWorldModal;
