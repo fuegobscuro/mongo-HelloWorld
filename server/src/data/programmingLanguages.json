@@ -343,7 +343,7 @@
     "name": "F#",
     "year": "2005",
     "creator": "Don Syme, Microsoft",
-    "description": "F# is a functional-first, general-purpose programming language that also allows for imperative and object-oriented programming. It's known for strong typing, succinct syntax, and integration with the .NET framework.",
+    "description": "F# is a functional-first, general-purpose programming language that also allows for imperative and object-oriented programming. Has strong typing, succinct syntax, and integration with .NET framework.",
     "helloWorldCode": "open System\n[<EntryPoint>]\nlet main argv = \n    printfn \"Hello, World!\"\n    0",
     "codeLang": "fsharp",
     "codeSimpleIcons": "https://cdn.simpleicons.org/fsharp/#378BBA",

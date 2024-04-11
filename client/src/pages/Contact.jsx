@@ -1,25 +1,27 @@
-import React from 'react';
-import ContactForm from '../components/ContactForm';
+import React, { useEffect } from 'react';
+import ContactForm from '../components/forms/ContactForm';
 import { Link } from 'react-router-dom';
 
 const Contact = () => {
+  useEffect(() => {
+    document.title = 'Contact';
+  }, []);
+
   const mainContentStyle = { minHeight: 'calc(100vh - 60px)' };
 
   return (
     <div
       style={mainContentStyle}
-      className='bg-gray-100 dark:bg-gray-800 px-4 py-2 overflow-auto'
+      className='bg-gray-200 dark:bg-gray-200 px-4 py-12 overflow-auto'
     >
-      <h1 className='text-center text-3xl font-semibold dark:text-white mt-2 mb-2'>
-        <b>Contact Us</b>
-      </h1>
       <ContactForm />
-      <div className='w-full flex justify-end pr-40 pt-4'>
+
+      <div className='absolute bottom-12 right-20'>
         <Link
           to='/'
-          className='bg-gray-300 hover:bg-yellow-200 text-black font-bold py-2 px-4 rounded dark:invert'
+          className='bg-emerald-400 hover:bg-emerald-300  drop-shadow-sm text-black font-bold py-2 px-4 rounded dark:bg-blue-800 dark:text-white dark:hover:bg-blue-700'
         >
-          Return to Home
+          Return Home
         </Link>
       </div>
     </div>

@@ -1,10 +1,11 @@
-// const connectDB = require('../database');
 const ProgrammingLanguage = require('../models/ProgrammingLanguage');
 const programmingLanguagesData = require('./programmingLanguages.json');
+const Contact = require('../models/Contact');
 
 async function seedDB() {
-  //   await connectDB(); // Ensure database connection
   try {
+    // Delete all entries for "Contact" and "ProgrammingLanguage" on seeding.
+    await Contact.deleteMany({});
     await ProgrammingLanguage.deleteMany({});
     await ProgrammingLanguage.insertMany(programmingLanguagesData);
     console.log('Database seeded successfully');
@@ -14,7 +15,7 @@ async function seedDB() {
 }
 
 if (require.main === module) {
-  // If run directly, seed the DB then exit.
+  // If run directly using "node seeDB.js", seed the DB then exit.
   seedDB().finally(() => process.exit());
 }
 

@@ -1,7 +1,8 @@
 const Contact = require('../models/Contact');
+const { validateContactForm } = require('../validations/contactValidations');
 
 // GET ALL CONTACT FORM MESSAGES
-exports.getAllContacts = async (req, res) => {
+exports.getAllContactMessages = async (req, res) => {
   try {
     const contacts = await Contact.find({});
     res.json(contacts);
@@ -14,6 +15,16 @@ exports.getAllContacts = async (req, res) => {
 exports.createContact = async (req, res) => {
   try {
     const { name, mail, message } = req.body;
+
+    // Validate inputs
+    const errors = validateContactForm({ name, mail, message });
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({
+        message: 'Validation errors',
+        errors,
+      });
+    }
+
     const newContact = new Contact({ name, mail, message });
     await newContact.save();
     res.status(201).json({
@@ -21,7 +32,7 @@ exports.createContact = async (req, res) => {
       data: newContact,
     });
   } catch (error) {
-    res.status(400).send(error);
+    res.status(500).send(error);
   }
 };
 
