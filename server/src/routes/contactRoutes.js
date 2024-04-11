@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
   createContact,
-  getAllContacts,
+  getAllContactMessages,
   deleteContact,
 } = require('../controllers/contactController');
 const {
@@ -12,12 +12,22 @@ const {
 } = require('../configs/authMiddleware');
 
 // Public
-router.post('/contact', createContact);
+router.post('/contact-message', createContact);
 
 // Admin and Super Admin only
-router.get('/contacts', isAuthenticated, isAdmin, getAllContacts);
+router.get(
+  '/contact-messages',
+  isAuthenticated,
+  isAdmin,
+  getAllContactMessages
+);
 
 // Super Admin only
-router.delete('/contact/:id', isAuthenticated, isSuperAdmin, deleteContact);
+router.delete(
+  '/contact-message/:id',
+  isAuthenticated,
+  isSuperAdmin,
+  deleteContact
+);
 
 module.exports = router;

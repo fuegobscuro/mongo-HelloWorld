@@ -7,6 +7,13 @@ body {
   @apply font-sans;
 }
 
+html,
+body,
+body * {
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out,
+    border-color 200ms ease-in-out, fill 200ms ease-in-out;
+}
+
 h1,
 h2,
 h3,
@@ -14,4 +21,19 @@ h4,
 h5,
 h6 {
   @apply font-serif;
+}
+
+@keyframes waveAnimation {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+}
+
+.animate-wave {
+  display: inline-block;
+  animation: waveAnimation 0.8s ease-in-out infinite;
 }

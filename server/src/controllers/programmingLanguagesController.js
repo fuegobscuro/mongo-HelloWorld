@@ -1,8 +1,14 @@
 const ProgrammingLanguage = require('../models/ProgrammingLanguage');
 
+// Get all programming languages, conditional for Home and Admin dashboard
 exports.getAllProgrammingLanguages = async (req, res) => {
   try {
-    const languages = await ProgrammingLanguage.find({ isActive: true });
+    const includeInactive = req.query.includeInactive === 'true';
+    const queryCondition = includeInactive ? {} : { isActive: true };
+
+    const languages = await ProgrammingLanguage.find(queryCondition).sort({
+      createdAt: -1,
+    });
     res.json(languages);
   } catch (error) {
     res.status(500).send(error);
@@ -21,6 +27,7 @@ exports.createProgrammingLanguage = async (req, res) => {
     codeLang,
     codeDevicon,
     codeSimpleIcons,
+    isActive,
   } = req.body;
 
   try {
@@ -34,6 +41,7 @@ exports.createProgrammingLanguage = async (req, res) => {
       codeLang,
       codeDevicon,
       codeSimpleIcons,
+      isActive,
     });
     await newLanguage.save();
     res.status(201).json(newLanguage);
