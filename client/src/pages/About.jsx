@@ -28,11 +28,11 @@ const About = () => {
               <span className='font-bold text-md text-indigo-900 dark:text-yellow-400'>
                 Web Development:{' '}
               </span>
-              <b>Ignacio Fosco</b>🧙🔥
+              <b>Ignacio Fosco</b> 🧙🔥
             </p>
             <div className='flex justify-center space-x-4'>
               <a
-                href='https://github.com/fuegobscuro'
+                href='https://github.com/ignaciofosco'
                 target='_blank'
                 rel='noopener noreferrer'
               >
