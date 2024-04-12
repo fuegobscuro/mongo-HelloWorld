@@ -18,24 +18,26 @@ const app = express();
 app.use(express.json());
 
 // CORS configuration:
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === 'production'
-        ? 'https://helloworldcompendium.vercel.app'
-        : 'http://localhost:3000',
-    credentials: true,
-    sameSite: 'None',
-    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH', 'HEAD'],
-    allowedHeaders: [
-      'Origin',
-      'X-Requested-With',
-      'Content-Type',
-      'Accept',
-      'Authorization',
-    ],
-  })
-);
+// app.use(
+//   cors({
+//     origin:
+//       process.env.NODE_ENV === 'production'
+//         ? 'https://helloworldcompendium.vercel.app'
+//         : 'http://localhost:3000',
+//     credentials: true,
+//     sameSite: 'None',
+//     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH', 'HEAD'],
+//     allowedHeaders: [
+//       'Origin',
+//       'X-Requested-With',
+//       'Content-Type',
+//       'Accept',
+//       'Authorization',
+//     ],
+//   })
+// );
+
+app.use(cors({ origin: true, credentials: true }));
 
 // Middlewares:
 app.use(bodyParser.json());
