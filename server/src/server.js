@@ -25,6 +25,7 @@ app.use(
         ? 'https://helloworldcompendium.vercel.app'
         : 'http://localhost:3000',
     credentials: true,
+    sameSite: 'None',
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH', 'HEAD'],
     allowedHeaders: [
       'Origin',
