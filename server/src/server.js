@@ -20,7 +20,10 @@ app.use(express.json());
 // CORS configuration:
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN, // FOR DEPLOY: MUST MODIFY THIS IN THE .ENV
+    origin:
+      process.env.NODE_ENV === 'production'
+        ? 'https://helloworldcompendium.vercel.app'
+        : 'http://localhost:3000',
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH', 'HEAD'],
     allowedHeaders: [
@@ -43,14 +46,18 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL }),
+    store: MongoStore.create({
+      mongoUrl:
+        process.env.NODE_ENV === 'production'
+          ? process.env.DATABASE_URL
+          : process.env.DATABASE_URL_DEV,
+    }),
     cookie: {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
-      sameSite: 'lax', // or 'strict', later
-      // Set domain if your frontend and backend are served from different domains
+      sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+      // Set domain if frontend and backend are served from different domains
       // domain: 'example.com',
-      // secure: false, // for development, set to true in production if using HTTPS
       maxAge: 2 * 60 * 60 * 1000, // 2 hours cookie expiration
     },
   })
@@ -73,15 +80,12 @@ app.use((err, req, res, next) => {
   console.error(`Error: ${message}`);
   if (process.env.NODE_ENV === 'development') {
     console.error(stack);
-    // Log stack trace in development mode for easier debugging
   }
 
-  // Send error response
   res.status(status).json({
     status: 'error',
     message,
     ...(process.env.NODE_ENV === 'development' && { stack }),
-    // Include stack trace in response only in development mode
   });
 });
 

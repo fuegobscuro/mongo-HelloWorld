@@ -113,7 +113,7 @@ function UserManagement() {
           </h2>
           <button
             onClick={openModalForAdd}
-            className='mb-4 bg-indigo-500 hover:bg-blue-700 text-black dark:text-white font-bold py-2 px-4 rounded'
+            className='mb-4 bg-indigo-400 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-700 text-black dark:text-white font-bold py-2 px-4 rounded'
           >
             + Add User
           </button>
@@ -131,7 +131,7 @@ function UserManagement() {
               <div className='flex space-x-2'>
                 <button
                   onClick={() => openModalForEdit(user)}
-                  className='px-4 py-1 bg-blue-500 hover:bg-blue-600 text-black dark:text-white font-bold rounded'
+                  className='px-4 py-1 bg-blue-400 hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 text-black dark:text-white font-bold rounded'
                 >
                   Update
                 </button>
@@ -140,15 +140,15 @@ function UserManagement() {
                   style={{ minWidth: '110px' }}
                   className={`px-4 py-1 text-black dark:text-white font-bold rounded ${
                     user.isActive
-                      ? 'bg-yellow-500 hover:bg-yellow-600'
-                      : 'bg-green-500 hover:bg-green-600'
+                      ? 'bg-yellow-400 hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-600'
+                      : 'bg-green-400 hover:bg-green-500 dark:bg-green-500 dark:hover:bg-green-600'
                   }`}
                 >
                   {user.isActive ? 'Deactivate' : ' Activate '}
                 </button>
                 <button
                   onClick={() => handleDelete(user._id)}
-                  className='px-4 py-1 bg-red-500 hover:bg-red-600 text-black dark:text-white font-bold rounded'
+                  className='px-4 py-1 bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-600 text-black dark:text-white font-bold rounded'
                 >
                   Delete
                 </button>
