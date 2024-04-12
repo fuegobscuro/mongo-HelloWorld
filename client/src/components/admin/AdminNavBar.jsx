@@ -152,7 +152,7 @@ const AdminNavBar = () => {
       <div className='flex items-center gap-4'>
         <button
           onClick={handleLogout}
-          className='bg-red-500 hover:bg-red-700 text-black dark:text-white font-bold py-0.5 px-4 rounded drop-shadow-sm'
+          className='bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-700 text-black dark:text-white font-bold py-0.5 px-4 rounded drop-shadow-sm'
         >
           Logout
         </button>

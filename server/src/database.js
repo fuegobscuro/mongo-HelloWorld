@@ -7,8 +7,14 @@ const connectDB = async () => {
     return;
   }
 
+  // Selecting the appropriate database URL based on NODE_ENV
+  const databaseUrl =
+    process.env.NODE_ENV === 'production'
+      ? process.env.DATABASE_URL
+      : process.env.DATABASE_URL_DEV;
+
   try {
-    await mongoose.connect(process.env.DATABASE_URL);
+    await mongoose.connect(databaseUrl);
     console.log('MongoDB connected successfully');
   } catch (error) {
     console.error('MongoDB connection failed:', error.message);
