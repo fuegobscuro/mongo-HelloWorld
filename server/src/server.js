@@ -25,7 +25,7 @@ app.use(
         ? 'https://helloworldcompendium.vercel.app'
         : 'http://localhost:3000',
     credentials: true,
-    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH', 'HEAD'],
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: [
       'Origin',
       'X-Requested-With',
@@ -55,8 +55,8 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
-      sameSite: 'None',
-      // sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+      // sameSite: 'None',
+      sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
       // Set domain if frontend and backend are served from different domains
       // domain: 'example.com',
       maxAge: 2 * 60 * 60 * 1000, // 2 hours cookie expiration
