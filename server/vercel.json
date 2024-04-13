@@ -1,7 +1,6 @@
 {
   "headers": [
     {
-      "version": 2,
       "builds": [
         {
           "src": "*.js",
