@@ -18,26 +18,23 @@ const app = express();
 app.use(express.json());
 
 // CORS configuration:
-// app.use(
-//   cors({
-//     origin:
-//       process.env.NODE_ENV === 'production'
-//         ? 'https://helloworldcompendium.vercel.app'
-//         : 'http://localhost:3000',
-//     credentials: true,
-//     sameSite: 'None',
-//     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH', 'HEAD'],
-//     allowedHeaders: [
-//       'Origin',
-//       'X-Requested-With',
-//       'Content-Type',
-//       'Accept',
-//       'Authorization',
-//     ],
-//   })
-// );
-
-app.use(cors({ origin: true, credentials: true }));
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === 'production'
+        ? 'https://helloworldcompendium.vercel.app'
+        : 'http://localhost:3000',
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH', 'HEAD'],
+    allowedHeaders: [
+      'Origin',
+      'X-Requested-With',
+      'Content-Type',
+      'Accept',
+      'Authorization',
+    ],
+  })
+);
 
 // Middlewares:
 app.use(bodyParser.json());
@@ -58,7 +55,8 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+      sameSite: 'None',
+      // sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
       // Set domain if frontend and backend are served from different domains
       // domain: 'example.com',
       maxAge: 2 * 60 * 60 * 1000, // 2 hours cookie expiration
