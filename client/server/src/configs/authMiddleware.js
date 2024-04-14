@@ -28,7 +28,7 @@ const isSuperAdmin = function (req, res, next) {
 // Middleware for checking if user is already logged in when trying to login
 const checkNotAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-    return res.redirect('/admin-dashboard'); // Adjust according to your frontend routing
+    return res.redirect('/admin-dashboard');
   }
   next();
 };
