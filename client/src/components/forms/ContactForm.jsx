@@ -27,7 +27,7 @@ const ContactForm = () => {
         if (result.isConfirmed) {
           setLoading(true);
           axios
-            .post('/contact-message', values)
+            .post('/api/contact-message/create', values)
             .then(() => {
               MySwal.fire({
                 title: 'Sent!',

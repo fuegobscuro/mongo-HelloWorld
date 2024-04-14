@@ -77,11 +77,11 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+**/.env*
+**/.env.local
+**/.env.development*
+**/.env.production*
+**/.env.test*
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -146,7 +146,10 @@ dist
 **/*.backup.*
 **/*.back.*
 
-node_modules
+# Exclude React build directory
+client/build/
+
+**/node_modules/
 
 *.sublime*
 

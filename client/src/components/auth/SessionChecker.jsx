@@ -10,7 +10,7 @@ const SessionChecker = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get('/session')
+      .get('/api/auth/session')
       .then((response) => {
         if (response.status === 200) {
           dispatch(setAuthenticated());

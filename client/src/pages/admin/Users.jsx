@@ -17,7 +17,7 @@ function UserManagement() {
 
   const fetchUsers = () => {
     axios
-      .get('/users')
+      .get('/api/users')
       .then((response) => setUsers(response.data))
       .catch((error) => console.error('Error fetching users:', error));
   };
@@ -37,7 +37,9 @@ function UserManagement() {
   const closeModal = () => setIsModalOpen(false);
 
   const handleModalSubmit = (userDetails) => {
-    const url = editMode ? `/user/update/${currentUser._id}` : '/register';
+    const url = editMode
+      ? `/api/user/update/${currentUser._id}`
+      : '/api/user/register';
     const method = editMode ? 'patch' : 'post';
 
     axios({ method, url, data: userDetails })
@@ -50,8 +52,8 @@ function UserManagement() {
 
   const handleDeactivateActivate = (user) => {
     const url = user.isActive
-      ? `/user/deactivate/${user._id}`
-      : `/user/reactivate/${user._id}`;
+      ? `/api/user/deactivate/${user._id}`
+      : `/api/user/reactivate/${user._id}`;
 
     axios
       .patch(url)
@@ -78,7 +80,7 @@ function UserManagement() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`/user/delete/${id}`)
+          .delete(`/api/user/delete/${id}`)
           .then(() => {
             setUsers(users.filter((user) => user._id !== id)); // Corrected to `setUsers` and `users`
             MySwal.fire({

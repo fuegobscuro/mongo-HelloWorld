@@ -12,7 +12,7 @@ const { isAuthenticated, isSuperAdmin } = require('../configs/authMiddleware');
 
 // Super Admin only
 router.get('/users', isAuthenticated, isSuperAdmin, getUsers);
-router.post('/register', isAuthenticated, isSuperAdmin, createUser);
+router.post('/user/register', isAuthenticated, isSuperAdmin, createUser);
 router.patch('/user/update/:id', isAuthenticated, isSuperAdmin, updateUser);
 router.patch(
   '/user/deactivate/:id',
