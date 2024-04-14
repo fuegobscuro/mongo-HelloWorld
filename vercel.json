@@ -27,7 +27,7 @@
       }
     },
     {
-      "src": "^/(?!api/)(.*)",
+      "src": "/(.*)",
       "dest": "/client/build/index.html",
       "headers": {
         "Access-Control-Allow-Origin": "*"
