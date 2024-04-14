@@ -11,7 +11,9 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "client/build" }
+      "config": {
+        "distDir": "client/build"
+      }
     }
   ],
   "routes": [
@@ -27,19 +29,19 @@
       }
     },
     {
+      "src": "/(favicon.ico|apple-touch-icon.png)",
+      "dest": "client/build/$1"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "client/build/static/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/build/index.html",
       "headers": {
         "Access-Control-Allow-Origin": "*"
-      }
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/client/build/favicon.ico"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "dest": "/client/build/apple-touch-icon.png"
+      },
+      "dest": "client/build/index.html"
     }
   ]
 }
