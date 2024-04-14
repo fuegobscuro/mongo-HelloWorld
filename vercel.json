@@ -29,6 +29,15 @@
       }
     },
     {
+      "src": "^/api/(.*)$",
+      "dest": "server/index.js",
+      "status": 404,
+      "headers": {
+        "Content-Type": "text/plain"
+      },
+      "body": "API route not found"
+    },
+    {
       "src": "/(favicon.ico|apple-touch-icon.png)",
       "dest": "client/build/$1"
     },
