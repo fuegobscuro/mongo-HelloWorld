@@ -16,8 +16,9 @@
   ],
   "routes": [
     {
-      "src": "^/api/(.*)",
-      "dest": "/server/index.js",
+      "src": "/api/(.+)",
+      "dest": "/client/server/index.js",
+      "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH"],
       "headers": {
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Origin": "*",
@@ -26,8 +27,8 @@
       }
     },
     {
-      "src": "^/(.*)",
-      "dest": "/build/index.html",
+      "src": "^/(?!api/)(.*)",
+      "dest": "/client/build/index.html",
       "headers": {
         "Access-Control-Allow-Origin": "*"
       }
