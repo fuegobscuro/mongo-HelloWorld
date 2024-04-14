@@ -29,7 +29,7 @@ function ProgrammingLanguages() {
 
   const fetchLanguages = () => {
     axios
-      .get('/programming-languages?includeInactive=true')
+      .get('/api/programming-languages?includeInactive=true')
       .then((response) => setLanguages(response.data))
       .catch((error) =>
         console.error('Error fetching programming languages:', error)
@@ -54,8 +54,8 @@ function ProgrammingLanguages() {
 
   const handleModalSubmit = (details) => {
     const url = editMode
-      ? `/update-language/${currentLanguage}`
-      : '/create-language';
+      ? `/programming-languages/update/${currentLanguage}`
+      : '/programming-languages/create';
     const method = editMode ? 'put' : 'post';
 
     axios({
@@ -72,8 +72,8 @@ function ProgrammingLanguages() {
 
   const handleDeactivateActivate = (language) => {
     const url = language.isActive
-      ? `/deactivate-language/${language._id}`
-      : `/reactivate-language/${language._id}`;
+      ? `/api/programming-languages/deactivate/${language._id}`
+      : `/api/programming-languages/reactivate/${language._id}`;
 
     axios
       .patch(url)
@@ -102,7 +102,7 @@ function ProgrammingLanguages() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`/delete-language/${id}`)
+          .delete(`/programming-languages/delete/${id}`)
           .then(() => {
             setLanguages(languages.filter((language) => language._id !== id));
             MySwal.fire({

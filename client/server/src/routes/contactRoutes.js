@@ -12,7 +12,7 @@ const {
 } = require('../configs/authMiddleware');
 
 // Public
-router.post('/contact-message', createContact);
+router.post('/contact-message/create', createContact);
 
 // Admin and Super Admin only
 router.get(

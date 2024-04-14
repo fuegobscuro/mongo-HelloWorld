@@ -16,7 +16,7 @@ function Admin() {
   useEffect(() => {
     document.title = 'Admin Login';
     axios
-      .get('/session')
+      .get('/api/auth/session')
       .then((response) => {
         if (response.status === 200) {
           dispatch(setAuthenticated());
@@ -37,7 +37,7 @@ function Admin() {
     onSubmit: (values) => {
       setLoading(true);
       axios
-        .post('/login', values)
+        .post('/api/auth/login', values)
         .then((response) => {
           console.log('Login successful:', response.data);
           dispatch(setAuthenticated());

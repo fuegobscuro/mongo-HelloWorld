@@ -2,22 +2,23 @@
   "version": 2,
   "builds": [
     {
-      "src": "server/index.js",
+      "src": "client/server/index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["server/**/*"]
+        "includeFiles": ["client/server/**/*"]
       }
     },
     {
-      "src": "package.json",
+      "src": "client/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "build" }
+      "config": { "distDir": "client/build" }
     }
   ],
   "routes": [
     {
-      "src": "^/api/(.*)",
-      "dest": "/server/index.js",
+      "src": "/api/(.*)",
+      "dest": "/client/server/index.js",
+      "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH"],
       "headers": {
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Origin": "*",
@@ -26,8 +27,8 @@
       }
     },
     {
-      "src": "^/(.*)",
-      "dest": "/build/index.html",
+      "src": "/(.*)",
+      "dest": "/client/build/index.html",
       "headers": {
         "Access-Control-Allow-Origin": "*"
       }

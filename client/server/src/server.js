@@ -68,7 +68,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes index:
-app.use('/', routes);
+app.use('/api/', routes);
 
 // Error handling:
 app.use((err, req, res, next) => {
