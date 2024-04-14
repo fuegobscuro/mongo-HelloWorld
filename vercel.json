@@ -2,10 +2,10 @@
   "version": 2,
   "builds": [
     {
-      "src": "../server/index.js",
+      "src": "server/index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["../server/**/*"]
+        "includeFiles": ["server/**/*"]
       }
     },
     {
@@ -16,8 +16,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "../server/index.js",
+      "src": "^/api/(.*)",
+      "dest": "/server/index.js",
       "headers": {
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Origin": "*",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "src": "/(.*)",
+      "src": "^/(.*)",
       "dest": "/build/index.html",
       "headers": {
         "Access-Control-Allow-Origin": "*"
