@@ -1,6 +1,5 @@
-const express = require('express');
 require('dotenv').config();
-const MongoStore = require('connect-mongo');
+const express = require('express');
 
 // Middleware imports:
 const cors = require('cors');
@@ -12,6 +11,7 @@ const routes = require('../src/routes/index.js');
 const passport = require('passport');
 require('../src/configs/passportConfig')(passport);
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 // Server initialization:
 const app = express();
@@ -41,6 +41,9 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 // Passport session initialization:
+// Correctly log the URL outside of the MongoStore.create() call
+console.log('MongoDB URL:', process.env.DATABASE_URL_DEV);
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -55,11 +58,8 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
-      // sameSite: 'None',
       sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
-      // Set domain if frontend and backend are served from different domains
-      // domain: 'example.com',
-      maxAge: 2 * 60 * 60 * 1000, // 2 hours cookie expiration
+      maxAge: 2 * 60 * 60 * 1000, // 2 hours
     },
   })
 );
@@ -68,7 +68,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes index:
-app.use('/api', routes);
+app.use('/', routes);
 
 // Error handling:
 app.use((err, req, res, next) => {
