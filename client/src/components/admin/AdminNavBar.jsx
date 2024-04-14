@@ -79,7 +79,7 @@ const AdminNavBar = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .get('/api/auth/logout')
+          .get('/auth/logout')
           .then(() => {
             console.log('Logged out successfully');
             dispatch(setUnauthenticated());

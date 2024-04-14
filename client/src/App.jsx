@@ -47,7 +47,7 @@ function App() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get('/api/programming-languages?includeInactive=false')
+      .get('/programming-languages?includeInactive=false')
       .then((response) => {
         setLanguages(response.data);
       })

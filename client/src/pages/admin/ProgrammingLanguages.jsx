@@ -29,7 +29,7 @@ function ProgrammingLanguages() {
 
   const fetchLanguages = () => {
     axios
-      .get('/api/programming-languages?includeInactive=true')
+      .get('/programming-languages?includeInactive=true')
       .then((response) => setLanguages(response.data))
       .catch((error) =>
         console.error('Error fetching programming languages:', error)
@@ -72,8 +72,8 @@ function ProgrammingLanguages() {
 
   const handleDeactivateActivate = (language) => {
     const url = language.isActive
-      ? `/api/programming-languages/deactivate/${language._id}`
-      : `/api/programming-languages/reactivate/${language._id}`;
+      ? `/programming-languages/deactivate/${language._id}`
+      : `/programming-languages/reactivate/${language._id}`;
 
     axios
       .patch(url)
