@@ -1,7 +1,7 @@
+require('dotenv').config();
 const connectDB = require('./src/database');
 const app = require('./src/server');
 // const seedDB = require('./src/data/seedDB');
-require('dotenv').config();
 
 async function initializeApp() {
   try {

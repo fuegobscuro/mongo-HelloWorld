@@ -19,25 +19,25 @@ router.get('/programming-languages', getAllProgrammingLanguages);
 
 // Admin only
 router.post(
-  '/create-language',
+  '/programming-languages/create',
   isAuthenticated,
   isAdmin,
   createProgrammingLanguage
 );
 router.put(
-  '/update-language/:id',
+  '/programming-languages/update/:id',
   isAuthenticated,
   isAdmin,
   updateProgrammingLanguage
 );
 router.patch(
-  '/deactivate-language/:id',
+  '/programming-languages/deactivate/:id',
   isAuthenticated,
   isAdmin,
   deactivateProgrammingLanguage
 );
 router.patch(
-  '/reactivate-language/:id',
+  '/programming-languages/reactivate/:id',
   isAuthenticated,
   isAdmin,
   reactivateProgrammingLanguage
@@ -45,7 +45,7 @@ router.patch(
 
 // Super Admin only
 router.delete(
-  '/delete-language/:id',
+  '/programming-languages/delete/:id',
   isAuthenticated,
   isSuperAdmin,
   deleteProgrammingLanguage
