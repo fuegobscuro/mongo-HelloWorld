@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import LanguageModal from '../../components/admin/LanguageModal';
+import LoadingAnimation from '../../components/common/LoadingAnimation';
 import MySwal from '../../configs/swalConfig';
 
 function ProgrammingLanguages() {
@@ -9,6 +10,7 @@ function ProgrammingLanguages() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [languageDetails, setLanguageDetails] = useState({
     name: '',
     year: '',
@@ -28,12 +30,18 @@ function ProgrammingLanguages() {
   }, []);
 
   const fetchLanguages = () => {
+    setLoading(true);
     axios
       .get('/programming-languages?includeInactive=true')
-      .then((response) => setLanguages(response.data))
-      .catch((error) =>
-        console.error('Error fetching programming languages:', error)
-      );
+      .then((response) => {
+        setLanguages(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const openModalForAdd = () => {
@@ -122,6 +130,10 @@ function ProgrammingLanguages() {
       }
     });
   };
+
+  if (loading) {
+    return <LoadingAnimation />;
+  }
 
   const mainContentStyle = { minHeight: 'calc(100vh - 72px)' };
 

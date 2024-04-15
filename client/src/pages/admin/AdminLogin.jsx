@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setAuthenticated } from '../../redux/actions';
+import { setToken } from '../../redux/actions';
 import { useFormik } from 'formik';
 import loginSchema from '../../validations/loginSchema';
 import LoadingAnimation from '../../components/common/LoadingAnimation';
@@ -15,18 +15,27 @@ function Admin() {
 
   useEffect(() => {
     document.title = 'Admin Login';
-    axios
-      .get('/auth/session')
-      .then((response) => {
-        if (response.status === 200) {
-          dispatch(setAuthenticated());
-          navigate('/admin-dashboard');
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [dispatch, navigate]);
+    if (localStorage.getItem('token') && !loading) {
+      axios
+        .get('/auth/token', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        })
+        .then((response) => {
+          if (response.status === 200 && response.data.isValid) {
+            dispatch(setToken(response.data.token));
+            navigate('/admin-dashboard');
+          } else {
+            localStorage.removeItem('token'); // Ensure token is cleared if not valid
+            dispatch(removeToken());
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          localStorage.removeItem('token');
+          dispatch(removeToken());
+        });
+    }
+  }, [dispatch, navigate, loading]); // Added loading to dependency array to prevent loop before login attempt
 
   const formik = useFormik({
     initialValues: {
@@ -40,11 +49,13 @@ function Admin() {
         .post('/auth/login', values)
         .then((response) => {
           console.log('Login successful:', response.data);
-          dispatch(setAuthenticated());
+          const { token } = response.data; // Extract token from response data
+          localStorage.setItem('token', token); // Save token to localStorage
+          dispatch(setToken(token)); // Update Redux state accordingly
           navigate('/admin-dashboard');
         })
         .catch((error) => {
-          console.error('Login error:', error);
+          console.error('Login error:', error.response.data);
           formik.setFieldError(
             'submit',
             'Failed to login. Please check your credentials.'

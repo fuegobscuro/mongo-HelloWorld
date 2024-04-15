@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const ProgrammingLanguage = require('../../models/ProgrammingLanguage');
 
-const mongoUrl = process.env.DATABASE_URL_DEV || process.env.DATABASE_URL;
+const mongoUrl =
+  process.env.NODE_ENV === 'production'
+    ? process.env.DATABASE_URL
+    : process.env.DATABASE_URL_DEV;
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,

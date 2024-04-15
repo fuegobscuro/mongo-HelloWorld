@@ -19,7 +19,7 @@ import Users from './pages/admin/Users';
 import NotFound from './pages/NotFound';
 import NavBar from './components/common/NavBar';
 import AdminNavBar from './components/admin/AdminNavBar';
-import SessionChecker from './components/auth/SessionChecker';
+import TokenChecker from './components/auth/TokenChecker';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import LoadingAnimation from './components/common/LoadingAnimation';
 import axios from 'axios';
@@ -66,6 +66,11 @@ function App() {
     setIsModalOpen(true);
   };
 
+  const token = localStorage.getItem('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+
   if (loading) {
     return <LoadingAnimation />;
   }
@@ -73,7 +78,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <SessionChecker>
+        <TokenChecker>
           <NavbarWrapper />
           <Routes>
             <Route
@@ -105,7 +110,7 @@ function App() {
             </Route>
             <Route path='*' element={<NotFound />} />
           </Routes>
-        </SessionChecker>
+        </TokenChecker>
       </Router>
     </Provider>
   );
