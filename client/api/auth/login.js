@@ -9,10 +9,7 @@ const mongoUrl =
     ? process.env.DATABASE_URL
     : process.env.DATABASE_URL_DEV;
 
-mongoose.connect(mongoUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoUrl);
 
 const login = async (req, res) => {
   const { username, password } = req.body;
