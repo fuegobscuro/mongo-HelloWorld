@@ -12,7 +12,7 @@ const {
 } = require('../configs/authMiddleware');
 
 // Public
-router.post('/contact-message/create', createContact);
+router.post('/contact-messages/create', createContact);
 
 // Admin and Super Admin only
 router.get(
@@ -24,7 +24,7 @@ router.get(
 
 // Super Admin only
 router.delete(
-  '/contact-message/:id',
+  '/contact-messages/:id',
   isAuthenticated,
   isSuperAdmin,
   deleteContact

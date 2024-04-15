@@ -41,9 +41,6 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 // Passport session initialization:
-// Correctly log the URL outside of the MongoStore.create() call
-console.log('MongoDB URL:', process.env.DATABASE_URL_DEV);
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,

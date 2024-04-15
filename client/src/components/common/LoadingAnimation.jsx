@@ -29,7 +29,7 @@ const LoadingAnimation = () => {
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.2); /* Dim the background */
+            background-color: rgba(0, 0, 0, 0.1); /* Dim the background */
             z-index: 9999; /* Ensure it's on top of other content */
           }
         `}
