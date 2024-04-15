@@ -8,10 +8,7 @@ const mongoUrl =
 
 async function connectToDatabase() {
   if (mongoose.connection.readyState !== 1) {
-    return mongoose.connect(mongoUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    return mongoose.connect(mongoUrl);
   }
   return Promise.resolve();
 }
