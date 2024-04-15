@@ -1,21 +1,22 @@
-import {
-  SET_AUTHENTICATED,
-  SET_UNAUTHENTICATED,
-  SET_LOADING,
-  UNSET_LOADING,
-} from './actions';
+import { SET_TOKEN, REMOVE_TOKEN, SET_LOADING, UNSET_LOADING } from './actions';
 
 const initialState = {
-  isAuthenticated: false,
+  token: null,
   loading: true,
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_AUTHENTICATED:
-      return { ...state, isAuthenticated: true };
-    case SET_UNAUTHENTICATED:
-      return { ...state, isAuthenticated: false };
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
+      };
+    case REMOVE_TOKEN:
+      return {
+        ...state,
+        token: null,
+      };
     case SET_LOADING:
       return { ...state, loading: true };
     case UNSET_LOADING:

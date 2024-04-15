@@ -4,7 +4,7 @@ import { useTheme } from '../common/ThemeContext';
 import axios from 'axios';
 import MySwal from '../../configs/swalConfig';
 import { useDispatch } from 'react-redux';
-import { setUnauthenticated } from '../../redux/actions';
+import { removeToken } from '../../redux/actions';
 import NavBar from '../common/NavBar';
 
 const AdminNavBar = () => {
@@ -79,17 +79,22 @@ const AdminNavBar = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .get('/auth/logout')
+          .get('/auth/logout', {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          })
           .then(() => {
             console.log('Logged out successfully');
-            dispatch(setUnauthenticated());
+            localStorage.removeItem('token');
+            dispatch(removeToken());
             navigate('/admin-login');
           })
           .catch((error) => {
             console.error('Logout failed', error);
             MySwal.fire({
               title: 'Failed!',
-              html: `<span class="text-gray-400">Logout failed.</span>`,
+              html: `<span class="text-gray-400">Logout failed. Please try again.</span>`,
               icon: 'error',
             });
           });

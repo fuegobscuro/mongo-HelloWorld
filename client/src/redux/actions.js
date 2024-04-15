@@ -1,15 +1,16 @@
 // Action Types
-export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
-export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
+export const SET_TOKEN = 'SET_TOKEN';
+export const REMOVE_TOKEN = 'REMOVE_TOKEN';
 export const SET_LOADING = 'SET_LOADING';
 export const UNSET_LOADING = 'UNSET_LOADING';
 
 // Action Creators
-export const setAuthenticated = () => ({
-  type: SET_AUTHENTICATED,
+export const setToken = (token) => ({
+  type: SET_TOKEN,
+  payload: token,
 });
-export const setUnauthenticated = () => ({
-  type: SET_UNAUTHENTICATED,
+export const removeToken = () => ({
+  type: REMOVE_TOKEN,
 });
 
 export const setLoading = () => ({ type: SET_LOADING });
