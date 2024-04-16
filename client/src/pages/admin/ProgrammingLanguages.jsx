@@ -79,13 +79,15 @@ function ProgrammingLanguages() {
   };
 
   const handleDeactivateActivate = (language) => {
-    const url = language.isActive
-      ? `/programming-languages/deactivate/${language._id}`
-      : `/programming-languages/reactivate/${language._id}`;
+    const baseUrl = process.env.REACT_APP_API_URL + '/programming-languages';
+    const action = language.isActive ? 'deactivate' : 'reactivate';
+    const url = `${baseUrl}/${action}/${language._id}`;
 
+    console.log('Making API call to change activation status:', url);
     axios
       .patch(url)
-      .then(() => {
+      .then((response) => {
+        console.log('Deactivation/Reactivation successful:', response);
         setLanguages((currentLanguages) =>
           currentLanguages.map((lang) =>
             lang._id === language._id
@@ -94,9 +96,9 @@ function ProgrammingLanguages() {
           )
         );
       })
-      .catch((error) =>
-        console.error(`Error updating language status:`, error)
-      );
+      .catch((error) => {
+        console.error('Error updating language status:', error);
+      });
   };
 
   const handleDelete = (id) => {

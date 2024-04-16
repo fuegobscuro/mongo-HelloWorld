@@ -1,17 +1,12 @@
+const connectToDatabase = require('../../configs/dbConnect');
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
 const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
 const { validateLoginForm } = require('../../validations/loginValidations');
 
-const mongoUrl =
-  process.env.NODE_ENV === 'production'
-    ? process.env.DATABASE_URL
-    : process.env.DATABASE_URL_DEV;
-
-mongoose.connect(mongoUrl);
-
 const login = async (req, res) => {
+  await connectToDatabase();
+
   const { username, password } = req.body;
 
   const errors = validateLoginForm({ username, password });
