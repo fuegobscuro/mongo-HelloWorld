@@ -1,20 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ignacioPic from '../utils/images/ignaciofosco.jpg';
 import darkBabyLunaPic from '../utils/images/darkbabyluna.jpg';
+import LoadingAnimation from '../components/common/LoadingAnimation';
 
 const About = () => {
   useEffect(() => {
     document.title = 'About';
   }, []);
 
+  const [imageLoaded, setImageLoaded] = useState({
+    ignacio: false,
+    luna: false,
+  });
+
+  const allImagesLoaded = Object.values(imageLoaded).every(Boolean);
+
   const mainContentStyle = { minHeight: 'calc(100vh - 60px)' };
+
+  const handleImageLoaded = (image) => {
+    setImageLoaded((prev) => ({ ...prev, [image]: true }));
+  };
 
   return (
     <div
-      className={`p-2  text-gray-900 bg-gray-200 dark:text-white flex flex-col items-center overflow-auto`}
+      className={`p-2 text-gray-900 bg-gray-200 dark:text-white flex flex-col items-center overflow-auto`}
       style={mainContentStyle}
     >
+      {!allImagesLoaded && <LoadingAnimation />}
+
       <div className='bg-white dark:bg-gray-800 rounded-xl p-2 drop-shadow-md'>
         <div className='flex flex-wrap justify-center items-center w-full'>
           {/* Ignacio Fosco's Box */}
@@ -22,6 +36,7 @@ const About = () => {
             <img
               src={ignacioPic}
               alt='Ignacio Fosco'
+              onLoad={() => handleImageLoaded('ignacio')}
               className='rounded-xl w-24 h-36 mb-2 shadow-md drop-shadow-md'
             />
             <p className='text-md mb-2 text-center'>
@@ -65,6 +80,7 @@ const About = () => {
             <img
               src={darkBabyLunaPic}
               alt='Dark Baby Luna'
+              onLoad={() => handleImageLoaded('luna')}
               className='rounded-xl w-24 h-36 mb-2 shadow-md drop-shadow-md'
             />
             <p className='text-md mb-2 text-center'>

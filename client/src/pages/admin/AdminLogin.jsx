@@ -1,77 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../../redux/actions';
 import { useFormik } from 'formik';
 import loginSchema from '../../validations/loginSchema';
 import LoadingAnimation from '../../components/common/LoadingAnimation';
 
-function Admin() {
+function AdminLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const token =
+    useSelector((state) => state.token) || localStorage.getItem('token');
 
   useEffect(() => {
-    document.title = 'Admin Login';
-    if (localStorage.getItem('token') && !loading) {
-      axios
-        .get('/auth/token', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        })
-        .then((response) => {
-          if (response.status === 200 && response.data.isValid) {
-            dispatch(setToken(response.data.token));
-            navigate('/admin-dashboard');
-          } else {
-            localStorage.removeItem('token'); // Ensure token is cleared if not valid
-            dispatch(removeToken());
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          localStorage.removeItem('token');
-          dispatch(removeToken());
-        });
+    if (token) {
+      navigate('/admin-dashboard');
     }
-  }, [dispatch, navigate, loading]); // Added loading to dependency array to prevent loop before login attempt
+  }, [token, navigate]);
 
   const formik = useFormik({
-    initialValues: {
-      username: '',
-      password: '',
-    },
+    initialValues: { username: '', password: '' },
     validationSchema: loginSchema,
     onSubmit: (values) => {
       setLoading(true);
       axios
         .post('/auth/login', values)
         .then((response) => {
-          console.log('Login successful:', response.data);
-          const { token } = response.data; // Extract token from response data
-          localStorage.setItem('token', token); // Save token to localStorage
-          dispatch(setToken(token)); // Update Redux state accordingly
+          localStorage.setItem('token', response.data.token);
+          dispatch(setToken(response.data.token));
           navigate('/admin-dashboard');
         })
         .catch((error) => {
           console.error('Login error:', error.response.data);
-          formik.setFieldError(
-            'submit',
-            'Failed to login. Please check your credentials.'
-          );
         })
-        .finally(() => {
-          setLoading(false);
-        });
+        .finally(() => setLoading(false));
     },
   });
-
-  const mainContentStyle = { minHeight: 'calc(100vh - 60px)' };
 
   if (loading) {
     return <LoadingAnimation />;
   }
+
+  const mainContentStyle = { minHeight: 'calc(100vh - 60px)' };
 
   return (
     <div
@@ -151,4 +124,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default AdminLogin;

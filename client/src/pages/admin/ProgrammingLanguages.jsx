@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchLanguagesRequest,
+  fetchLanguagesSuccess,
+  fetchLanguagesFailure,
+  createLanguage,
+  updateLanguage,
+  updateLanguageStatus,
+  deleteLanguage,
+} from '../../redux/actions';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import LanguageModal from '../../components/admin/LanguageModal';
@@ -6,12 +16,14 @@ import LoadingAnimation from '../../components/common/LoadingAnimation';
 import MySwal from '../../configs/swalConfig';
 
 function ProgrammingLanguages() {
-  const [languages, setLanguages] = useState([]);
+  const dispatch = useDispatch();
+  const languages = useSelector((state) => state.languages);
+  const [loading, setLoading] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [languageDetails, setLanguageDetails] = useState({
+  const initialLanguageDetails = {
     name: '',
     year: '',
     creator: '',
@@ -22,85 +34,81 @@ function ProgrammingLanguages() {
     codeDevicon: '',
     codeSimpleIcons: '',
     isActive: true,
-  });
+  };
+  const [languageDetails, setLanguageDetails] = useState(
+    initialLanguageDetails
+  );
 
   useEffect(() => {
     document.title = 'Manage Programming Languages';
-    fetchLanguages();
-  }, []);
 
-  const fetchLanguages = () => {
+    dispatch(fetchLanguagesRequest());
     setLoading(true);
     axios
       .get('/programming-languages?includeInactive=true')
       .then((response) => {
-        setLanguages(response.data);
+        dispatch(fetchLanguagesSuccess(response.data));
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        dispatch(fetchLanguagesFailure(error.toString()));
       })
       .finally(() => {
         setLoading(false);
       });
-  };
+  }, [dispatch]);
 
   const openModalForAdd = () => {
-    setLanguageDetails(null);
     setIsModalOpen(true);
     setEditMode(false);
     setCurrentLanguage(null);
+    setLanguageDetails({ ...initialLanguageDetails });
   };
 
   const openModalForEdit = (language) => {
+    setIsModalOpen(true);
     setEditMode(true);
     setCurrentLanguage(language._id);
     setLanguageDetails({ ...language });
-    setIsModalOpen(true);
   };
 
   const closeModal = () => setIsModalOpen(false);
 
+  // Creation and Update handler
   const handleModalSubmit = (details) => {
     const url = editMode
-      ? `/programming-languages/update/${currentLanguage}`
+      ? `/programming-languages/update?id=${currentLanguage}`
       : '/programming-languages/create';
     const method = editMode ? 'put' : 'post';
-
-    axios({
-      method: method,
-      url: url,
-      data: details,
-    })
-      .then((response) => {
-        fetchLanguages(); // Refetch the list to reflect changes
+    axios({ method, url, data: details })
+      .then(() => {
+        if (editMode) {
+          dispatch(updateLanguage(currentLanguage, details));
+        } else {
+          dispatch(createLanguage(details));
+        }
         setIsModalOpen(false);
       })
-      .catch((error) => console.error('Error submitting language:', error));
-  };
-
-  const handleDeactivateActivate = (language) => {
-    const baseUrl = process.env.REACT_APP_API_URL + '/programming-languages';
-    const action = language.isActive ? 'deactivate' : 'reactivate';
-    const url = `${baseUrl}/${action}/${language._id}`;
-
-    console.log('Making API call to change activation status:', url);
-    axios
-      .patch(url)
-      .then((response) => {
-        console.log('Deactivation/Reactivation successful:', response);
-        setLanguages((currentLanguages) =>
-          currentLanguages.map((lang) =>
-            lang._id === language._id
-              ? { ...lang, isActive: !lang.isActive }
-              : lang
-          )
-        );
-      })
       .catch((error) => {
-        console.error('Error updating language status:', error);
+        console.error('Error submitting language:', error);
       });
   };
 
+  // Activation/Deactivation handler
+  const handleDeactivateActivate = (language) => {
+    const url = language.isActive
+      ? `/programming-languages/deactivate?id=${language._id}`
+      : `/programming-languages/reactivate?id=${language._id}`;
+    axios
+      .patch(url)
+      .then(() => {
+        dispatch(updateLanguageStatus(language._id, !language.isActive));
+      })
+      .catch((error) =>
+        console.error(`Error updating language status:`, error)
+      );
+  };
+
+  // Delete handler
   const handleDelete = (id) => {
     MySwal.fire({
       title: 'Are you sure?',
@@ -112,9 +120,9 @@ function ProgrammingLanguages() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`/programming-languages/delete/${id}`)
+          .post(`/programming-languages/delete?id=${id}`)
           .then(() => {
-            setLanguages(languages.filter((language) => language._id !== id));
+            dispatch(deleteLanguage(id));
             MySwal.fire({
               title: 'Deleted!',
               html: `<span class="text-gray-400">The language has been deleted.</span>`,
@@ -142,12 +150,8 @@ function ProgrammingLanguages() {
   return (
     <div
       style={mainContentStyle}
-      className='bg-gray-200 dark:bg-gray-200 flex flex-col justify-center items-center overflow-auto px-4 py-6'
+      className='bg-gray-200 dark:bg-gray-200 flex flex-col justify-top items-center overflow-auto px-4 py-6'
     >
-      {/* <h1 className='text-3xl font-bold dark:text-white mb-6'>
-        Admin Dashboard
-      </h1> */}
-
       <div className='w-full max-w-4xl bg-green-100 dark:bg-gray-800 shadow-2xl dark:shadow-lg rounded-lg p-4'>
         {' '}
         <div className='flex justify-between'>

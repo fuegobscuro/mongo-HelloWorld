@@ -6,6 +6,7 @@ import MySwal from '../../configs/swalConfig';
 import { useDispatch } from 'react-redux';
 import { removeToken } from '../../redux/actions';
 import NavBar from '../common/NavBar';
+import LoadingButton from '../../components/common/LoadingButton';
 
 const AdminNavBar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -15,10 +16,11 @@ const AdminNavBar = () => {
   const [isRotated, setIsRotated] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [worldEmoji, setWorldEmoji] = useState('🌍');
+  const [loading, setLoading] = useState(false);
 
   const handleToggleTheme = () => {
     toggleTheme();
-    setIsRotated(!isRotated); // Toggle the rotation state
+    setIsRotated(!isRotated);
   };
 
   const iconClasses = `px-2 text-lg transition-transform duration-500 transform ${
@@ -38,10 +40,9 @@ const AdminNavBar = () => {
       setWorldEmoji('🌎');
     }
 
-    return () => clearInterval(intervalId); // Cleanup on unmount
+    return () => clearInterval(intervalId);
   }, [isHovered]);
 
-  // Function to remove trailing slash
   const normalizePath = (path) =>
     path.endsWith('/') ? path.slice(0, -1) : path;
 
@@ -54,7 +55,6 @@ const AdminNavBar = () => {
     '/admin-dashboard/users',
   ];
 
-  // Use the normalizePath function on location.pathname
   const isValidAdminPath = adminPaths.includes(
     normalizePath(location.pathname)
   );
@@ -78,6 +78,7 @@ const AdminNavBar = () => {
       cancelButtonText: 'Cancel',
     }).then((result) => {
       if (result.isConfirmed) {
+        setLoading(true);
         axios
           .get('/auth/logout', {
             headers: {
@@ -86,21 +87,23 @@ const AdminNavBar = () => {
           })
           .then(() => {
             console.log('Logged out successfully');
-            localStorage.removeItem('token');
             dispatch(removeToken());
-            navigate('/admin-login');
           })
           .catch((error) => {
             console.error('Logout failed', error);
-            MySwal.fire({
-              title: 'Failed!',
-              html: `<span class="text-gray-400">Logout failed. Please try again.</span>`,
-              icon: 'error',
-            });
+            dispatch(removeToken());
+          })
+          .finally(() => {
+            setLoading(false);
+            navigate('/admin-login');
           });
       }
     });
   };
+
+  if (loading) {
+    return <LoadingButton />;
+  }
 
   return (
     <nav className={`${navbarClasses} p-4 flex justify-between items-center`}>
@@ -155,12 +158,16 @@ const AdminNavBar = () => {
       )}
 
       <div className='flex items-center gap-4'>
-        <button
-          onClick={handleLogout}
-          className='bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-700 text-black dark:text-white font-bold py-0.5 px-4 rounded drop-shadow-sm'
-        >
-          Logout
-        </button>
+        {loading ? (
+          <LoadingButton />
+        ) : (
+          <button
+            onClick={handleLogout}
+            className='bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-700 text-black dark:text-white font-bold py-0.5 px-4 rounded drop-shadow-sm'
+          >
+            Logout
+          </button>
+        )}
 
         <button
           title='Toggle Light/Dark Mode'

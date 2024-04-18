@@ -4,7 +4,7 @@ const ProgrammingLanguage = require('../../models/ProgrammingLanguage');
 module.exports = async (req, res) => {
   await connectToDatabase();
 
-  const { id } = req.query; // or req.params if using a custom server that supports it
+  const { id } = req.query;
 
   try {
     const language = await ProgrammingLanguage.findById(id);

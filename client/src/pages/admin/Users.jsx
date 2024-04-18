@@ -1,26 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchUsersRequest,
+  fetchUsersSuccess,
+  fetchUsersFailure,
+  createUser,
+  updateUser,
+  updateUserStatus,
+  deleteUser,
+} from '../../redux/actions';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import UserModal from '../../components/admin/UserModal';
+import LoadingAnimation from '../../components/common/LoadingAnimation';
 import MySwal from '../../configs/swalConfig';
 
-function UserManagement() {
-  const [users, setUsers] = useState([]);
+function Users() {
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users);
+
+  const [loading, setLoading] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     document.title = 'Manage Users';
-    fetchUsers();
-  }, []);
 
-  const fetchUsers = () => {
+    dispatch(fetchUsersRequest());
+    setLoading(true);
     axios
       .get('/users')
-      .then((response) => setUsers(response.data))
-      .catch((error) => console.error('Error fetching users:', error));
-  };
+      .then((response) => {
+        dispatch(fetchUsersSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(fetchUsersFailure(error.toString()));
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [dispatch]);
 
   const openModalForAdd = () => {
     setCurrentUser(null);
@@ -36,33 +57,35 @@ function UserManagement() {
 
   const closeModal = () => setIsModalOpen(false);
 
-  const handleModalSubmit = (userDetails) => {
-    const url = editMode ? `/user/update/${currentUser._id}` : '/user/register';
-    const method = editMode ? 'patch' : 'post';
-
-    axios({ method, url, data: userDetails })
-      .then(() => {
-        fetchUsers(); // Refetch the list to reflect changes
+  // Creation and Update handler
+  const handleModalSubmit = (details) => {
+    const url = editMode
+      ? `/users/update?id=${currentUser._id}`
+      : '/users/register';
+    const method = editMode ? 'put' : 'post';
+    axios({ method, url, data: details })
+      .then((response) => {
+        if (editMode) {
+          dispatch(updateUser(currentUser._id, details));
+        } else {
+          // Assuming the server responds with the full user object, including _id
+          dispatch(createUser(response.data));
+        }
         setIsModalOpen(false);
       })
-      .catch((error) => console.error('Error managing user:', error));
+      .catch((error) => {
+        console.error('Error managing user:', error);
+      });
   };
 
   const handleDeactivateActivate = (user) => {
     const url = user.isActive
-      ? `/user/deactivate/${user._id}`
-      : `/user/reactivate/${user._id}`;
-
+      ? `/users/deactivate?id=${user._id}`
+      : `/users/reactivate?id=${user._id}`;
     axios
       .patch(url)
       .then(() => {
-        setUsers((currentUsers) =>
-          currentUsers.map((currentUser) =>
-            currentUser._id === user._id
-              ? { ...currentUser, isActive: !currentUser.isActive }
-              : currentUser
-          )
-        );
+        dispatch(updateUserStatus(user._id, !user.isActive));
       })
       .catch((error) => console.error(`Error updating user status:`, error));
   };
@@ -73,14 +96,14 @@ function UserManagement() {
       html: `<span class="text-gray-400">You won't be able to revert this!</span>`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete the user!',
+      confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, cancel!',
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`/user/delete/${id}`)
+          .post(`/users/delete?id=${id}`)
           .then(() => {
-            setUsers(users.filter((user) => user._id !== id)); // Corrected to `setUsers` and `users`
+            dispatch(deleteUser(id));
             MySwal.fire({
               title: 'Deleted!',
               html: `<span class="text-gray-400">The user has been deleted.</span>`,
@@ -99,14 +122,18 @@ function UserManagement() {
     });
   };
 
-  const mainContentStyle = { minHeight: 'calc(100vh - 72px)' };
+  if (loading) {
+    return <LoadingAnimation />;
+  }
+
+  const mainContentStyle = { minHeight: 'calc(100vh - 60px)' };
 
   return (
     <div
       style={mainContentStyle}
-      className='bg-gray-200 dark:bg-gray-200 flex flex-col justify-center items-center overflow-auto px-4 py-6'
+      className='bg-gray-200 dark:bg-gray-200 flex flex-col justify-top items-center overflow-auto px-4 py-6'
     >
-      <div className='w-full max-w-4xl bg-green-100 dark:bg-gray-800 shadow-2xl dark:shadow-lg rounded-lg p-4'>
+      <div className='w-full max-w-4xl bg-green-100 dark:bg-gray-800 shadow-2xl dark:shadow-lg rounded-lg p-4 '>
         <div className='flex justify-between'>
           <h2 className='text-2xl px-1 font-bold text-indigo-800 drop-shadow-xl dark:text-emerald-400 mb-4 flex justify-start'>
             Users
@@ -121,7 +148,7 @@ function UserManagement() {
         <ul className='space-y-3'>
           {users.map((user) => (
             <li
-              key={user.id}
+              key={user._id}
               className='flex justify-between items-center bg-white dark:bg-blue-900 rounded-md p-3'
             >
               <span className='font-semibold dark:text-white'>
@@ -185,4 +212,4 @@ function UserManagement() {
   );
 }
 
-export default UserManagement;
+export default Users;

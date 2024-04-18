@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setToken, removeToken } from '../../redux/actions';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setToken,
+  removeToken,
+  setUserRole,
+  removeUserRole,
+} from '../../redux/actions';
 import LoadingAnimation from '../common/LoadingAnimation';
 
+function parseJwt(token) {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
+}
+
 const TokenChecker = ({ children }) => {
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const token =
+    useSelector((state) => state.token) || localStorage.getItem('token');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
     if (token) {
-      axios
-        .get('/auth/token', { headers: { Authorization: `Bearer ${token}` } })
-        .then((response) => {
-          if (response.data.isValid) {
-            dispatch(setToken(token));
-          } else {
-            clearTokenData();
-          }
-        })
-        .catch(() => {
-          clearTokenData();
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
+      const decoded = parseJwt(token);
+      if (decoded && new Date(decoded.exp * 1000) > new Date()) {
+        dispatch(setToken(token));
+        dispatch(setUserRole(decoded.user_role));
+      } else {
+        dispatch(removeToken());
+        dispatch(removeUserRole());
+      }
     }
-  }, [dispatch]);
-
-  const clearTokenData = () => {
-    localStorage.removeItem('token');
-    dispatch(removeToken());
-  };
+    setLoading(false);
+  }, [dispatch, token]);
 
   if (loading) {
     return <LoadingAnimation />;
