@@ -7,8 +7,8 @@ import MySwal from '../../configs/swalConfig';
 import LoadingAnimation from '../common/LoadingAnimation';
 
 const ContactForm = () => {
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -46,8 +46,8 @@ const ContactForm = () => {
               });
             })
             .finally(() => {
-              setLoading(false); // Stop loading
-              setSubmitting(false); // Stop formik submitting
+              setLoading(false);
+              setSubmitting(false);
             });
         }
       });

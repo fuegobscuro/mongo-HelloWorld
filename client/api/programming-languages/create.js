@@ -1,14 +1,9 @@
-const mongoose = require('mongoose');
+const connectToDatabase = require('../../configs/dbConnect');
 const ProgrammingLanguage = require('../../models/ProgrammingLanguage');
 
-const mongoUrl =
-  process.env.NODE_ENV === 'production'
-    ? process.env.DATABASE_URL
-    : process.env.DATABASE_URL_DEV;
-
-mongoose.connect(mongoUrl);
-
 module.exports = async (req, res) => {
+  await connectToDatabase();
+
   const {
     name,
     year,

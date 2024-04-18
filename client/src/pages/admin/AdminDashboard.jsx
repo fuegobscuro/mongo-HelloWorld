@@ -6,14 +6,14 @@ function AdminDashboard() {
     document.title = 'Admin Dashboard';
   }, []);
 
-  const mainContentStyle = { minHeight: 'calc(100vh - 72px)' };
+  const mainContentStyle = { minHeight: 'calc(100vh - 60px)' };
 
   return (
     <div
       style={mainContentStyle}
       className='flex flex-col justify-center items-center bg-gray-200 dark:bg-gray-200'
     >
-      <div className='w-full max-w-xl bg-green-100 dark:bg-gray-800 shadow-md drop-shadow-md rounded-lg flex flex-col items-center justify-center mb-40 p-8'>
+      <div className='w-full max-w-xl bg-green-100 dark:bg-gray-800 shadow-md drop-shadow-md rounded-lg flex flex-col items-center justify-center p-8 mb-20'>
         <h1 className='text-2xl font-bold dark:text-white mb-4'>
           Welcome to the Admin Dashboard
         </h1>

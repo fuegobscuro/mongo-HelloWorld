@@ -1,17 +1,5 @@
-const mongoose = require('mongoose');
+const connectToDatabase = require('../../configs/dbConnect');
 const ProgrammingLanguage = require('../../models/ProgrammingLanguage');
-
-const mongoUrl =
-  process.env.NODE_ENV === 'production'
-    ? process.env.DATABASE_URL
-    : process.env.DATABASE_URL_DEV;
-
-async function connectToDatabase() {
-  if (mongoose.connection.readyState !== 1) {
-    return mongoose.connect(mongoUrl);
-  }
-  return Promise.resolve();
-}
 
 async function handler(req, res) {
   try {

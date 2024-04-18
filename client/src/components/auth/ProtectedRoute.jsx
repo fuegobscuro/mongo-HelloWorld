@@ -1,20 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
 
 const ProtectedRoute = () => {
-  const token = useSelector((state) => state.token);
-  if (!token) {
-    return <Navigate to='/admin-login' />;
-  }
+  const token =
+    useSelector((state) => state.token) || localStorage.getItem('token');
 
-  try {
-    const { exp } = jwtDecode(token);
-    if (Date.now() >= exp * 1000) {
-      return <Navigate to='/admin-login' />;
-    }
-  } catch (error) {
+  if (!token) {
     return <Navigate to='/admin-login' />;
   }
 
