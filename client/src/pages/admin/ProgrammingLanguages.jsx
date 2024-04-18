@@ -95,11 +95,10 @@ function ProgrammingLanguages() {
 
   // Activation/Deactivation handler
   const handleDeactivateActivate = (language) => {
-    const url = language.isActive
-      ? `/programming-languages/deactivate?id=${language._id}`
-      : `/programming-languages/reactivate?id=${language._id}`;
+    const updatedDetails = { isActive: !language.isActive };
+    const url = `/programming-languages/update?id=${language._id}`;
     axios
-      .patch(url)
+      .put(url, updatedDetails)
       .then(() => {
         dispatch(updateLanguageStatus(language._id, !language.isActive));
       })

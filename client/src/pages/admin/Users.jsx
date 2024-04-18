@@ -5,8 +5,6 @@ import {
   fetchUsersSuccess,
   fetchUsersFailure,
   createUser,
-  updateUser,
-  updateUserStatus,
   deleteUser,
 } from '../../redux/actions';
 import axios from 'axios';
@@ -22,8 +20,6 @@ function Users() {
   const [loading, setLoading] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     document.title = 'Manage Users';
@@ -43,51 +39,24 @@ function Users() {
       });
   }, [dispatch]);
 
-  const openModalForAdd = () => {
-    setCurrentUser(null);
-    setIsModalOpen(true);
-    setEditMode(false);
-  };
-
-  const openModalForEdit = (user) => {
-    setEditMode(true);
-    setCurrentUser(user);
+  const openModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => setIsModalOpen(false);
 
-  // Creation and Update handler
+  // Creation  handler
   const handleModalSubmit = (details) => {
-    const url = editMode
-      ? `/users/update?id=${currentUser._id}`
-      : '/users/register';
-    const method = editMode ? 'put' : 'post';
+    const url = '/users/register';
+    const method = 'post';
     axios({ method, url, data: details })
       .then((response) => {
-        if (editMode) {
-          dispatch(updateUser(currentUser._id, details));
-        } else {
-          // Assuming the server responds with the full user object, including _id
-          dispatch(createUser(response.data));
-        }
+        dispatch(createUser(response.data));
         setIsModalOpen(false);
       })
       .catch((error) => {
         console.error('Error managing user:', error);
       });
-  };
-
-  const handleDeactivateActivate = (user) => {
-    const url = user.isActive
-      ? `/users/deactivate?id=${user._id}`
-      : `/users/reactivate?id=${user._id}`;
-    axios
-      .patch(url)
-      .then(() => {
-        dispatch(updateUserStatus(user._id, !user.isActive));
-      })
-      .catch((error) => console.error(`Error updating user status:`, error));
   };
 
   const handleDelete = (id) => {
@@ -139,7 +108,7 @@ function Users() {
             Users
           </h2>
           <button
-            onClick={openModalForAdd}
+            onClick={openModal}
             className='mb-4 bg-indigo-400 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-700 text-black dark:text-white font-bold py-2 px-4 rounded'
           >
             + Add User
@@ -156,23 +125,6 @@ function Users() {
                 {user.isActive ? 'Active' : 'Inactive'}
               </span>
               <div className='flex space-x-2'>
-                <button
-                  onClick={() => openModalForEdit(user)}
-                  className='px-4 py-1 bg-blue-400 hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 text-black dark:text-white font-bold rounded'
-                >
-                  Update
-                </button>
-                <button
-                  onClick={() => handleDeactivateActivate(user)}
-                  style={{ minWidth: '110px' }}
-                  className={`px-4 py-1 text-black dark:text-white font-bold rounded ${
-                    user.isActive
-                      ? 'bg-yellow-400 hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-600'
-                      : 'bg-green-400 hover:bg-green-500 dark:bg-green-500 dark:hover:bg-green-600'
-                  }`}
-                >
-                  {user.isActive ? 'Deactivate' : ' Activate '}
-                </button>
                 <button
                   onClick={() => handleDelete(user._id)}
                   className='px-4 py-1 bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-600 text-black dark:text-white font-bold rounded'
@@ -205,8 +157,6 @@ function Users() {
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={handleModalSubmit}
-        userDetails={currentUser}
-        isEditMode={editMode}
       />
     </div>
   );
