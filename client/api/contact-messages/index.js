@@ -1,14 +1,5 @@
-const mongoose = require('mongoose');
+const connectToDatabase = require('../../configs/dbConnect');
 const Contact = require('../../models/Contact');
-
-const mongoUrl = process.env.DATABASE_URL || process.env.DATABASE_URL_DEV;
-
-const connectToDatabase = async () => {
-  if (mongoose.connection.readyState !== 1) {
-    return mongoose.connect(mongoUrl);
-  }
-  return Promise.resolve();
-};
 
 module.exports = async (req, res) => {
   try {

@@ -15,7 +15,6 @@
     "express": "^4.19.2",
     "formik": "^2.4.5",
     "jsonwebtoken": "^9.0.2",
-    "jwt-decode": "^4.0.0",
     "mongoose": "^8.2.4",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
@@ -29,6 +28,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
+    "reselect": "^5.1.0",
     "sweetalert2": "^11.10.7",
     "sweetalert2-react-content": "^5.0.7",
     "yup": "^1.4.0"

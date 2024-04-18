@@ -8,7 +8,7 @@ const ContactMessages = () => {
 
   return (
     <div>
-      <div>Contact Messages</div>;
+      <div>Contact Messages</div>
       <div className='fixed bottom-24 right-20'>
         <Link
           to='/admin-dashboard'
