@@ -4,8 +4,9 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(
   Swal.mixin({
     customClass: {
-      container: 'max-w-xl mx-auto',
-      popup: 'bg-green-50 dark:bg-gray-700 shadow-md drop-shadow-md rounded-lg',
+      container: 'max-w-lg mx-auto justify-center',
+      popup:
+        'bg-green-50 dark:bg-gray-700 shadow-md drop-shadow-md rounded-lg border',
       title: 'text-black dark:text-white text-lg font-bold',
       content: 'text-gray-600 dark:text-gray-200 text-sm shadow-2xl',
       confirmButton:

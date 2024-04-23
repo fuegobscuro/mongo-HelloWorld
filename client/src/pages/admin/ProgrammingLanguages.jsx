@@ -6,19 +6,23 @@ import {
   fetchLanguagesFailure,
   createLanguage,
   updateLanguage,
-  updateLanguageStatus,
   deleteLanguage,
 } from '../../redux/actions';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import LanguageModal from '../../components/admin/LanguageModal';
+import SortButtons from '../../components/home/SortButtons';
 import LoadingAnimation from '../../components/common/LoadingAnimation';
 import MySwal from '../../configs/swalConfig';
 
 function ProgrammingLanguages() {
   const dispatch = useDispatch();
+  const reduxToken = useSelector((state) => state.token);
+  const localStorageToken = localStorage.getItem('token');
+  const token = localStorageToken || reduxToken;
   const languages = useSelector((state) => state.languages);
-  const [loading, setLoading] = useState(false);
+  const userLevel = useSelector((state) => state.userLevel);
+  const [loading, setLoading] = useState(true);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -40,17 +44,26 @@ function ProgrammingLanguages() {
   );
 
   useEffect(() => {
-    document.title = 'Manage Programming Languages';
+    document.title = 'Admin: Programming Languages';
 
     dispatch(fetchLanguagesRequest());
     setLoading(true);
     axios
-      .get('/programming-languages?includeInactive=true')
+      .get('/programming-languages?includeInactive=true', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         dispatch(fetchLanguagesSuccess(response.data));
       })
       .catch((error) => {
         dispatch(fetchLanguagesFailure(error.toString()));
+        MySwal.fire({
+          title: 'Failed!',
+          html: `<span class="text-gray-400">${error.response.data.message}</span>`,
+          icon: 'error',
+        });
       })
       .finally(() => {
         setLoading(false);
@@ -79,17 +92,26 @@ function ProgrammingLanguages() {
       ? `/programming-languages/update?id=${currentLanguage}`
       : '/programming-languages/create';
     const method = editMode ? 'put' : 'post';
-    axios({ method, url, data: details })
-      .then(() => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios({ method, url, headers, data: details })
+      .then((response) => {
         if (editMode) {
           dispatch(updateLanguage(currentLanguage, details));
         } else {
-          dispatch(createLanguage(details));
+          dispatch(createLanguage(response.data));
+          setCurrentLanguage(response.data._id);
         }
         setIsModalOpen(false);
       })
       .catch((error) => {
         console.error('Error submitting language:', error);
+        MySwal.fire({
+          title: 'Failed!',
+          html: `<span class="text-gray-400">${error.response.data.message}</span>`,
+          icon: 'error',
+        });
       });
   };
 
@@ -97,14 +119,23 @@ function ProgrammingLanguages() {
   const handleDeactivateActivate = (language) => {
     const updatedDetails = { isActive: !language.isActive };
     const url = `/programming-languages/update?id=${language._id}`;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios;
     axios
-      .put(url, updatedDetails)
-      .then(() => {
-        dispatch(updateLanguageStatus(language._id, !language.isActive));
+      .put(url, updatedDetails, { headers: headers })
+      .then((response) => {
+        dispatch(updateLanguage(language._id, response.data));
       })
-      .catch((error) =>
-        console.error(`Error updating language status:`, error)
-      );
+      .catch((error) => {
+        console.error(`Error updating language status:`, error);
+        MySwal.fire({
+          title: 'Failed!',
+          html: `<span class="text-gray-400">${error.response.data.message}</span>`,
+          icon: 'error',
+        });
+      });
   };
 
   // Delete handler
@@ -119,7 +150,15 @@ function ProgrammingLanguages() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .post(`/programming-languages/delete?id=${id}`)
+          .post(
+            `/programming-languages/delete?id=${id}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
           .then(() => {
             dispatch(deleteLanguage(id));
             MySwal.fire({
@@ -132,7 +171,7 @@ function ProgrammingLanguages() {
             console.error('Error deleting language:', error);
             MySwal.fire({
               title: 'Failed!',
-              html: `<span class="text-gray-400">There was a problem deleting the language.</span>`,
+              html: `<span class="text-gray-400">${error.response.data.message}</span>`,
               icon: 'error',
             });
           });
@@ -152,7 +191,6 @@ function ProgrammingLanguages() {
       className='bg-gray-200 dark:bg-gray-200 flex flex-col justify-top items-center overflow-auto px-4 py-6'
     >
       <div className='w-full max-w-4xl bg-green-100 dark:bg-gray-800 shadow-2xl dark:shadow-lg rounded-lg p-4'>
-        {' '}
         <div className='flex justify-between'>
           <h2 className='text-2xl px-1 font-bold text-indigo-800 drop-shadow-xl dark:text-emerald-400 mb-4 flex justify-start'>
             Programming Languages
@@ -191,12 +229,14 @@ function ProgrammingLanguages() {
                 >
                   {language.isActive ? 'Deactivate' : ' Activate '}
                 </button>
-                <button
-                  onClick={() => handleDelete(language._id)}
-                  className='px-4 py-1 bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-600 text-black dark:text-white font-bold rounded'
-                >
-                  Delete
-                </button>
+                {userLevel === 'super' && (
+                  <button
+                    onClick={() => handleDelete(language._id)}
+                    className='px-4 py-1 bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-600 text-black dark:text-white font-bold rounded'
+                  >
+                    Delete
+                  </button>
+                )}
               </div>
             </li>
           ))}

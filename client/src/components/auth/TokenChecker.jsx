@@ -1,46 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, Outlet } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import {
   setToken,
   removeToken,
-  setUserRole,
-  removeUserRole,
+  setUserLevel,
+  removeUserLevel,
 } from '../../redux/actions';
 import LoadingAnimation from '../common/LoadingAnimation';
 
-function parseJwt(token) {
-  try {
-    return JSON.parse(atob(token.split('.')[1]));
-  } catch (e) {
-    return null;
-  }
-}
-
-const TokenChecker = ({ children }) => {
+const TokenChecker = () => {
   const dispatch = useDispatch();
+  const reduxToken = useSelector((state) => state.token); // Always call useSelector
+  const localStorageToken = localStorage.getItem('token');
+  const token = localStorageToken || reduxToken; // Use either local storage token or redux token
+  const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
-  const token =
-    useSelector((state) => state.token) || localStorage.getItem('token');
 
   useEffect(() => {
-    if (token) {
-      const decoded = parseJwt(token);
-      if (decoded && new Date(decoded.exp * 1000) > new Date()) {
-        dispatch(setToken(token));
-        dispatch(setUserRole(decoded.user_role));
+    async function validateToken() {
+      if (token) {
+        const decoded = jwtDecode(token);
+        if (decoded && new Date(decoded.exp * 1000) > new Date()) {
+          dispatch(setToken(token));
+          dispatch(setUserLevel(decoded.level));
+          setAuthorized(true);
+        } else {
+          dispatch(removeToken());
+          dispatch(removeUserLevel());
+          setAuthorized(false);
+        }
       } else {
-        dispatch(removeToken());
-        dispatch(removeUserRole());
+        setAuthorized(false);
       }
+      setLoading(false);
     }
-    setLoading(false);
+
+    validateToken();
   }, [dispatch, token]);
 
   if (loading) {
     return <LoadingAnimation />;
   }
 
-  return children;
+  if (!authorized) {
+    return <Navigate to='/admin-login' />;
+  }
+
+  return <Outlet />;
 };
 
 export default TokenChecker;

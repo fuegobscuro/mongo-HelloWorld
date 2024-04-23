@@ -2,20 +2,23 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setToken } from '../../redux/actions';
+import { setToken, setUserLevel } from '../../redux/actions';
 import { useFormik } from 'formik';
 import loginSchema from '../../validations/loginSchema';
-import LoadingAnimation from '../../components/common/LoadingAnimation';
+import LoadingButton from '../../components/common/LoadingButton';
+import MySwal from '../../configs/swalConfig';
 
 function AdminLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const token =
     useSelector((state) => state.token) || localStorage.getItem('token');
+  const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   useEffect(() => {
+    document.title = 'Admin Login';
+
     if (token) {
       navigate('/admin-dashboard');
     }
@@ -31,18 +34,20 @@ function AdminLogin() {
         .then((response) => {
           localStorage.setItem('token', response.data.token);
           dispatch(setToken(response.data.token));
+          dispatch(setUserLevel(response.data.user.level));
           navigate('/admin-dashboard');
         })
         .catch((error) => {
           console.error('Login error:', error.response.data);
+          MySwal.fire({
+            title: 'Login failed!',
+            html: `<span class="text-gray-400">${error.response.data.message}</span>`,
+            icon: 'error',
+          });
         })
         .finally(() => setLoading(false));
     },
   });
-
-  if (loading) {
-    return <LoadingAnimation />;
-  }
 
   const mainContentStyle = { minHeight: 'calc(100vh - 60px)' };
 
@@ -52,11 +57,11 @@ function AdminLogin() {
       className='flex items-center justify-center min-h-screen bg-gray-200 pb-20 overflow-auto'
     >
       <div
-        className='flex flex-col items-center bg-green-100 dark:bg-gray-800 rounded-lg p-12 shadow-md drop-shadow-md m-3'
+        className='flex flex-col items-center bg-green-100 dark:bg-gray-800 rounded-lg py-4 px-16 shadow-md drop-shadow-md m-3'
         style={{ maxWidth: '600px' }}
       >
         <div className='w-full mx-auto'>
-          <h1 className='text-center text-3xl font-bold text-gray-900 dark:text-white px-2 mb-6 drop-shadow-sm'>
+          <h1 className='text-center text-3xl font-bold text-gray-900 dark:text-white px-2 mb-4 drop-shadow-sm'>
             Admin Login
           </h1>
           <form onSubmit={formik.handleSubmit} className='space-y-1'>
@@ -101,12 +106,12 @@ function AdminLogin() {
                 </div>
               )}
             </div>
-            <div className='w-full flex justify-center pt-8'>
+            <div className='w-full flex justify-center pt-4'>
               <button
                 type='submit'
-                className='bg-emerald-400 hover:bg-emerald-300 drop-shadow-md text-black font-bold py-3 px-6 rounded dark:bg-blue-800 dark:text-white dark:hover:bg-blue-700'
+                className='bg-emerald-400 hover:bg-emerald-300 drop-shadow-md text-black font-bold py-2 px-4 rounded dark:bg-blue-800 dark:text-white dark:hover:bg-blue-700'
               >
-                Sign In
+                {loading ? <LoadingButton /> : 'Sign In'}
               </button>
             </div>
           </form>

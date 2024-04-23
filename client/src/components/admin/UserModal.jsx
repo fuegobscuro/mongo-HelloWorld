@@ -74,7 +74,7 @@ const UserModal = ({
             onClick={() => {
               formik.resetForm();
               onClose();
-              setShowPasswordInput(false); // Ensure this is reset when closing the modal
+              setShowPasswordInput(false);
             }}
             className='absolute top-0 right-0 mt-3 mr-3 border border-transparent bg-emerald-400 drop-shadow-sm shadow-sm text-sm hover:bg-emerald-300 text-black font-bold rounded-lg dark:bg-blue-800 dark:text-white dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 items-center p-1 ml-auto inline-flex'
           >
@@ -212,7 +212,7 @@ const UserModal = ({
                 type='submit'
                 className='inline-flex justify-center py-2 px-4 border border-transparent bg-emerald-400 drop-shadow-sm hover:bg-emerald-300 text-black font-bold rounded dark:bg-blue-800 dark:text-white dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm  text-sm'
               >
-                {isEditMode ? 'Update' : 'Add'} Admin
+                {isEditMode ? 'Update' : 'Add'} User
               </button>
             </div>
           </form>
