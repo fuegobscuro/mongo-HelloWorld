@@ -5,7 +5,7 @@ import {
   Route,
   useLocation,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import store from './redux/store';
 // Import pages
 import Home from './pages/Home';
@@ -21,7 +21,6 @@ import NotFound from './pages/NotFound';
 // Import components
 import NavBar from './components/common/NavBar';
 import AdminNavBar from './components/admin/AdminNavBar';
-import ProtectedRoute from './components/auth/ProtectedRoute';
 import TokenChecker from './components/auth/TokenChecker';
 // Axios setup
 import axios from 'axios';
@@ -29,10 +28,22 @@ axios.defaults.withCredentials = true;
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 function App() {
+  // const reduxToken = useSelector((state) => state.token);
+  // const localStorageToken = localStorage.getItem('token');
+  // const token = localStorageToken || reduxToken;
+  // console.log(store); // Check if the store is defined
+  // console.log(reduxToken); // Check what's fetched from the store
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCode, setCurrentCode] = useState('');
   const [currentLang, setCurrentLang] = useState('');
   const [currentLangName, setCurrentLangName] = useState('');
+
+  // useEffect(() => {
+  //   if (token) {
+  //     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  //   }
+  // }, [token]);
 
   const openModalWithCode = (code, codeLang, langName) => {
     setCurrentCode(code);
@@ -61,28 +72,27 @@ function App() {
             element={
               <Home
                 isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
                 openModalWithCode={openModalWithCode}
+                currentCode={currentCode}
+                currentLang={currentLang}
+                currentLangName={currentLangName}
               />
             }
           />
           <Route path='/contact' element={<Contact />} />
           <Route path='/about' element={<About />} />
           <Route path='/admin-login' element={<AdminLogin />} />
-          <Route element={<ProtectedRoute />}>
-            {/* <Route element={<TokenChecker />}> */}
-            <Route path='/admin-dashboard' element={<AdminDashboard />} />
+          <Route path='/admin-dashboard' element={<TokenChecker />}>
+            <Route index element={<AdminDashboard />} />
             <Route
-              path='/admin-dashboard/programming-languages'
+              path='programming-languages'
               element={<ProgrammingLanguages />}
             />
-            <Route
-              path='/admin-dashboard/contact-messages'
-              element={<ContactMessages />}
-            />
-            <Route path='/admin-dashboard/analytics' element={<Analytics />} />
-            <Route path='/admin-dashboard/users' element={<Users />} />
+            <Route path='contact-messages' element={<ContactMessages />} />
+            <Route path='analytics' element={<Analytics />} />
+            <Route path='users' element={<Users />} />
           </Route>
-          {/* </Route> */}
           <Route path='*' element={<NotFound />} />
         </Routes>
       </Router>

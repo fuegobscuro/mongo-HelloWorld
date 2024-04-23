@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ignacioPic from '../utils/images/ignaciofosco.jpg';
 import darkBabyLunaPic from '../utils/images/darkbabyluna.jpg';
-import LoadingAnimation from '../components/common/LoadingAnimation';
+import LoadingButton from '../components/common/LoadingButton';
 
 const About = () => {
   useEffect(() => {
@@ -27,9 +27,9 @@ const About = () => {
       className={`p-2 text-gray-900 bg-gray-200 dark:text-white flex flex-col items-center overflow-auto`}
       style={mainContentStyle}
     >
-      {!allImagesLoaded && <LoadingAnimation />}
+      {!allImagesLoaded && <LoadingButton />}
 
-      <div className='bg-white dark:bg-gray-800 rounded-xl p-2 drop-shadow-md'>
+      <div className='bg-white dark:bg-gray-800 rounded-xl px-4 py-3 drop-shadow-md'>
         <div className='flex flex-wrap justify-center items-center w-full'>
           {/* Ignacio Fosco's Box */}
           <div className='flex flex-col items-center bg-green-100 dark:bg-blue-900 rounded-xl p-3 drop-shadow-md m-3'>

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { useFormik } from 'formik';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { useFormik } from 'formik';
 import contactSchema from '../../validations/contactSchema';
 import MySwal from '../../configs/swalConfig';
-import LoadingAnimation from '../common/LoadingAnimation';
+import LoadingButton from '../../components/common/LoadingButton';
+import { createContactMessage } from '../../redux/actions';
 
 const ContactForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -18,45 +21,33 @@ const ContactForm = () => {
     },
     validationSchema: contactSchema,
     onSubmit: async (values, { setSubmitting }) => {
-      MySwal.fire({
-        title: 'Are you sure?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, send it!',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          setLoading(true);
-          axios
-            .post('/contact-messages/create', values)
-            .then(() => {
-              MySwal.fire({
-                title: 'Sent!',
-                html: '<span class="text-gray-400">Your message has been sent.</span>',
-                icon: 'success',
-              }).then(() => {
-                navigate('/');
-              });
-            })
-            .catch((error) => {
-              console.error('Submission error:', error);
-              MySwal.fire({
-                title: 'Error!',
-                html: '<span class="text-gray-400">There was an issue sending your message</span>',
-                icon: 'error',
-              });
-            })
-            .finally(() => {
-              setLoading(false);
-              setSubmitting(false);
-            });
-        }
-      });
+      setLoading(true);
+      axios
+        .post('/contact-messages/create', values)
+        .then((response) => {
+          dispatch(createContactMessage(response.data));
+          MySwal.fire({
+            title: 'Sent!',
+            html: '<span class="text-gray-400">Your message has been sent.</span>',
+            icon: 'success',
+          }).then(() => {
+            navigate('/');
+          });
+        })
+        .catch((error) => {
+          console.error('Submission error:', error);
+          MySwal.fire({
+            title: 'Error!',
+            html: `<span class="text-gray-400">${error.response.data.message}</span>`,
+            icon: 'error',
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+          setSubmitting(false);
+        });
     },
   });
-
-  if (loading) {
-    return <LoadingAnimation />;
-  }
 
   return (
     <div className='max-w-xl mx-auto bg-green-100 dark:bg-gray-800 shadow-md drop-shadow-md rounded-lg p-6'>
@@ -80,7 +71,7 @@ const ContactForm = () => {
               </p>
             )}
           </div>
-          <div>
+          <div className='mt-4 mb-4'>
             <label className='block text-sm font-medium text-gray-800 dark:text-white'>
               <b>Email:</b>
             </label>
@@ -98,7 +89,7 @@ const ContactForm = () => {
               </p>
             )}
           </div>
-          <div>
+          <div className='mb-4'>
             <label className='block text-sm font-medium text-gray-800 dark:text-white'>
               <b>Message:</b>
             </label>
@@ -122,7 +113,7 @@ const ContactForm = () => {
             type='submit'
             className='bg-emerald-400 drop-shadow-sm hover:bg-emerald-300 text-black font-bold py-2 px-4 rounded dark:bg-blue-800 dark:text-white dark:hover:bg-blue-700'
           >
-            Submit
+            {loading ? <LoadingButton /> : 'Submit'}
           </button>
         </div>
       </form>
