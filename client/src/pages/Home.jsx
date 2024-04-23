@@ -8,6 +8,7 @@ import {
 import axios from 'axios';
 import HelloWorldModal from '../components/modals/HelloWorldModal';
 import SortButtons from '../components/home/SortButtons';
+// import HomeFilters from '../components/home/HomeFilters';
 import LoadingAnimation from '../components/common/LoadingAnimation';
 import Pagination from '../components/home/Pagination';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -71,12 +72,15 @@ function Home({
   return (
     <div className='bg-gray-200'>
       <div className='container mx-auto p-4' style={mainContentStyle}>
-        <SortButtons
-          languages={languages}
-          setCurrentSortedLanguages={setSortedLanguages}
-          initialSortOrder='TIOBE Ranking'
-          onSortOrderChange={() => setCurrentPage(1)}
-        />
+        <div className='flex justify-center'>
+          <SortButtons
+            languages={languages}
+            setCurrentSortedLanguages={setSortedLanguages}
+            initialSortOrder='TIOBE Ranking'
+            onSortOrderChange={() => setCurrentPage(1)}
+          />
+          {/* <HomeFilters /> */}
+        </div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2'>
           {sortedLanguages
             .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
@@ -90,22 +94,22 @@ function Home({
                     language.name
                   )
                 }
-                className='relative card bg-gray-50 text-gray-900 dark:bg-gray-800 dark:text-gray-100 shadow-lg rounded-lg p-4 cursor-pointer hover:bg-emerald-50 dark:hover:bg-gray-700 overflow-hidden flex flex-col h-[235px] justify-between'
+                className='relative card bg-gray-50 text-gray-900 dark:bg-gray-800 dark:text-gray-100 shadow-lg rounded-lg p-4 cursor-pointer hover:bg-emerald-50 dark:hover:bg-gray-700 scale-95 hover:scale-100 overflow-hidden flex flex-col h-[235px] justify-between'
               >
                 <div>
-                  <h2 className='font-bold text-2xl mb-2 text-indigo-800 dark:text-emerald-500'>
+                  <h2 className='font-bold text-2xl ml-0.5 mb-1 text-indigo-800 dark:text-emerald-500 text-center'>
                     {language.name}
                   </h2>
-                  <p className='mb-0.5'>
+                  <p className='ml-0.5 mb-0.5'>
                     <b>Year</b>: {language.year}
                   </p>
-                  <p className='mb-0.5'>
+                  <p className='ml-0.5 mb-0.5'>
                     <b>Creator</b>: {language.creator}
                   </p>
-                  <p className='mb-0.5'>
+                  <p className='ml-0.5 mb-0.5'>
                     <b>TIOBE Ranking</b>: {language.tiobeRank}
                   </p>
-                  <p className='mb-0.5'>
+                  <p className='ml-0.5 mb-0.5'>
                     <b>Description</b>: {language.description}
                   </p>
                 </div>

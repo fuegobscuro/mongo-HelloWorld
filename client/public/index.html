@@ -15,8 +15,10 @@
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-
-      gtag('config', 'G-E35JKY4S1S');
+      gtag('config', 'G-E35JKY4S1S', {
+        cookie_domain: 'auto',
+        cookie_flags: 'SameSite=None;Secure',
+      });
     </script>
 
     <link
@@ -34,7 +36,7 @@
       href="https://cdn.jsdelivr.net/npm/devicon/devicon.min.css"
     />
 
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" type="image/x-icon" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"

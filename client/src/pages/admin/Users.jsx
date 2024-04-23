@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchUsersRequest,
   fetchUsersSuccess,
   fetchUsersFailure,
+  updateUser,
   createUser,
   deleteUser,
 } from '../../redux/actions';
@@ -15,62 +17,141 @@ import MySwal from '../../configs/swalConfig';
 
 function Users() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const reduxToken = useSelector((state) => state.token);
+  const localStorageToken = localStorage.getItem('token');
+  const token = localStorageToken || reduxToken;
   const users = useSelector((state) => state.users);
+  const userLevel = useSelector((state) => state.userLevel);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    document.title = 'Manage Users';
+    if (userLevel !== 'super') {
+      navigate('/admin-dashboard');
+    }
+
+    document.title = 'Admin: Users';
 
     dispatch(fetchUsersRequest());
     setLoading(true);
     axios
-      .get('/users')
+      .get('/users', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         dispatch(fetchUsersSuccess(response.data));
       })
       .catch((error) => {
         dispatch(fetchUsersFailure(error.toString()));
+        MySwal.fire({
+          title: 'Failed!',
+          html: `<span class="text-gray-400">${error.response.data.message}</span>`,
+          icon: 'error',
+        });
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [dispatch]);
+  }, [dispatch, navigate, userLevel]);
 
-  const openModal = () => {
+  const openModalForAdd = () => {
+    setCurrentUser(null);
+    setIsModalOpen(true);
+    setEditMode(false);
+  };
+
+  const openModalForEdit = (user) => {
+    setEditMode(true);
+    setCurrentUser(user);
     setIsModalOpen(true);
   };
 
   const closeModal = () => setIsModalOpen(false);
 
-  // Creation  handler
+  // Creation and Update handler
   const handleModalSubmit = (details) => {
-    const url = '/users/register';
-    const method = 'post';
-    axios({ method, url, data: details })
+    const url = editMode
+      ? `/users/update?id=${currentUser && currentUser._id}`
+      : '/users/create';
+    const method = editMode ? 'put' : 'post';
+    axios({
+      method: method,
+      url: url,
+      data: details,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => {
-        dispatch(createUser(response.data));
+        if (editMode) {
+          dispatch(updateUser(currentUser._id, details));
+        } else {
+          dispatch(createUser(response.data));
+          setCurrentUser(response.data);
+        }
         setIsModalOpen(false);
       })
       .catch((error) => {
         console.error('Error managing user:', error);
+        MySwal.fire({
+          title: 'Failed!',
+          html: `<span class="text-gray-400">${error.response.data.message}</span>`,
+          icon: 'error',
+        });
       });
   };
 
+  // Activation/Deactivation handler
+  const handleDeactivateActivate = (user) => {
+    const updatedDetails = { isActive: !user.isActive };
+    const url = `/users/update?id=${user._id}`;
+    axios({
+      method: 'put',
+      url: url,
+      data: updatedDetails,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        dispatch(updateUser(user._id, response.data));
+      })
+      .catch((error) => {
+        console.error(`Error updating user status:`, error);
+        MySwal.fire({
+          title: 'Failed!',
+          html: `<span class="text-gray-400">${error.response.data.message}</span>`,
+          icon: 'error',
+        });
+      });
+  };
+
+  // Delete handler
   const handleDelete = (id) => {
     MySwal.fire({
       title: 'Are you sure?',
       html: `<span class="text-gray-400">You won't be able to revert this!</span>`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Yes, delete the user!',
       cancelButtonText: 'No, cancel!',
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .post(`/users/delete?id=${id}`)
+        axios;
+        axios({
+          method: 'post',
+          url: `/users/delete?id=${id}`,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
           .then(() => {
             dispatch(deleteUser(id));
             MySwal.fire({
@@ -83,7 +164,7 @@ function Users() {
             console.error('Error deleting user:', error);
             MySwal.fire({
               title: 'Failed!',
-              html: `<span class="text-gray-400">There was a problem deleting the user.</span>`,
+              html: `<span class="text-gray-400">${error.response.data.message}</span>`,
               icon: 'error',
             });
           });
@@ -108,7 +189,7 @@ function Users() {
             Users
           </h2>
           <button
-            onClick={openModal}
+            onClick={openModalForAdd}
             className='mb-4 bg-indigo-400 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-700 text-black dark:text-white font-bold py-2 px-4 rounded'
           >
             + Add User
@@ -125,6 +206,23 @@ function Users() {
                 {user.isActive ? 'Active' : 'Inactive'}
               </span>
               <div className='flex space-x-2'>
+                <button
+                  onClick={() => openModalForEdit(user)}
+                  className='px-4 py-1 bg-blue-400 hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 text-black dark:text-white font-bold rounded'
+                >
+                  Update
+                </button>
+                <button
+                  onClick={() => handleDeactivateActivate(user)}
+                  style={{ minWidth: '110px' }}
+                  className={`px-4 py-1 text-black dark:text-white font-bold rounded ${
+                    user.isActive
+                      ? 'bg-yellow-400 hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-600'
+                      : 'bg-green-400 hover:bg-green-500 dark:bg-green-500 dark:hover:bg-green-600'
+                  }`}
+                >
+                  {user.isActive ? 'Deactivate' : ' Activate '}
+                </button>
                 <button
                   onClick={() => handleDelete(user._id)}
                   className='px-4 py-1 bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-600 text-black dark:text-white font-bold rounded'
@@ -157,6 +255,8 @@ function Users() {
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={handleModalSubmit}
+        userDetails={currentUser}
+        isEditMode={editMode}
       />
     </div>
   );

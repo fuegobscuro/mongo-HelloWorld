@@ -5,7 +5,6 @@ export const FETCH_LANGUAGES_SUCCESS = 'FETCH_LANGUAGES_SUCCESS';
 export const FETCH_LANGUAGES_FAILURE = 'FETCH_LANGUAGES_FAILURE';
 export const CREATE_LANGUAGE = 'CREATE_LANGUAGE';
 export const UPDATE_LANGUAGE = 'UPDATE_LANGUAGE';
-export const UPDATE_LANGUAGE_STATUS = 'UPDATE_LANGUAGE_STATUS';
 export const DELETE_LANGUAGE = 'DELETE_LANGUAGE';
 // USERS
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
@@ -13,13 +12,22 @@ export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
-export const UPDATE_USER_STATUS = 'UPDATE_USER_STATUS';
 export const DELETE_USER = 'DELETE_USER';
+// CONTACT MESSAGES
+export const FETCH_CONTACT_MESSAGES_REQUEST = 'FETCH_CONTACT_MESSAGES_REQUEST';
+export const FETCH_CONTACT_MESSAGES_SUCCESS = 'FETCH_CONTACT_MESSAGES_SUCCESS';
+export const FETCH_CONTACT_MESSAGES_FAILURE = 'FETCH_CONTACT_MESSAGES_FAILURE';
+export const CREATE_CONTACT_MESSAGE = 'CREATE_CONTACT_MESSAGE';
+export const DELETE_CONTACT_MESSAGE = 'DELETE_CONTACT_MESSAGE';
 // AUTH
 export const SET_TOKEN = 'SET_TOKEN';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
-export const SET_USER_ROLE = 'SET_USER_ROLE';
-export const REMOVE_USER_ROLE = 'REMOVE_USER_ROLE';
+export const SET_USER_LEVEL = 'SET_USER_LEVEL';
+export const REMOVE_USER_LEVEL = 'REMOVE_USER_LEVEL';
+// HOME FILTERS
+export const SET_FILTERED_LANGUAGES = 'SET_FILTERED_LANGUAGES';
+export const SET_YEAR_FILTER = 'SET_YEAR_FILTER';
+export const SET_TIOBE_FILTER = 'SET_TIOBE_FILTER';
 
 // Action Creators
 // PROGRAMMING LANGUAGES
@@ -42,17 +50,12 @@ export const updateLanguage = (id, languageData) => ({
   type: UPDATE_LANGUAGE,
   payload: { id, languageData },
 });
-export const updateLanguageStatus = (id, isActive) => ({
-  type: UPDATE_LANGUAGE_STATUS,
-  payload: { id, isActive },
-});
 export const deleteLanguage = (id) => ({
   type: DELETE_LANGUAGE,
   payload: id,
 });
 
 // USERS
-// PROGRAMMING LANGUAGES
 export const fetchUsersRequest = () => ({
   type: FETCH_USERS_REQUEST,
 });
@@ -72,12 +75,29 @@ export const updateUser = (id, userData) => ({
   type: UPDATE_USER,
   payload: { id, userData },
 });
-export const updateUserStatus = (id, isActive) => ({
-  type: UPDATE_USER_STATUS,
-  payload: { id, isActive },
-});
 export const deleteUser = (id) => ({
   type: DELETE_USER,
+  payload: id,
+});
+
+// CONTACT MESSAGES
+export const fetchContactMessagesRequest = () => ({
+  type: FETCH_CONTACT_MESSAGES_REQUEST,
+});
+export const fetchContactMessagesSuccess = (contactMessages) => ({
+  type: FETCH_CONTACT_MESSAGES_SUCCESS,
+  payload: contactMessages,
+});
+export const fetchContactMessagesFailure = (error) => ({
+  type: FETCH_CONTACT_MESSAGES_FAILURE,
+  payload: error,
+});
+export const createContactMessage = (contactMessageData) => ({
+  type: CREATE_CONTACT_MESSAGE,
+  payload: contactMessageData,
+});
+export const deleteContactMessage = (id) => ({
+  type: DELETE_CONTACT_MESSAGE,
   payload: id,
 });
 
@@ -90,10 +110,26 @@ export const removeToken = () => ({
   type: REMOVE_TOKEN,
 });
 
-export const setUserRole = (role) => ({
-  type: SET_USER_ROLE,
-  payload: role,
+export const setUserLevel = (level) => ({
+  type: SET_USER_LEVEL,
+  payload: level,
 });
-export const removeUserRole = () => ({
-  type: REMOVE_USER_ROLE,
+export const removeUserLevel = () => ({
+  type: REMOVE_USER_LEVEL,
+});
+
+// HOME FILTERS
+export const setFilteredLanguages = (languages) => ({
+  type: SET_FILTERED_LANGUAGES,
+  payload: languages,
+});
+
+export const setYearFilter = (min, max) => ({
+  type: SET_YEAR_FILTER,
+  payload: { min, max },
+});
+
+export const setTiobeFilter = (min, max) => ({
+  type: SET_TIOBE_FILTER,
+  payload: { min, max },
 });

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeToken, removeUserLevel } from '../../redux/actions';
 import { useTheme } from '../common/ThemeContext';
-import axios from 'axios';
-import MySwal from '../../configs/swalConfig';
-import { useDispatch } from 'react-redux';
-import { removeToken } from '../../redux/actions';
 import NavBar from '../common/NavBar';
+import MySwal from '../../configs/swalConfig';
 import LoadingButton from '../../components/common/LoadingButton';
 
 const AdminNavBar = () => {
@@ -17,6 +16,7 @@ const AdminNavBar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [worldEmoji, setWorldEmoji] = useState('🌍');
   const [loading, setLoading] = useState(false);
+  const userLevel = useSelector((state) => state.userLevel);
 
   const handleToggleTheme = () => {
     toggleTheme();
@@ -79,31 +79,13 @@ const AdminNavBar = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setLoading(true);
-        axios
-          .get('/auth/logout', {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          })
-          .then(() => {
-            console.log('Logged out successfully');
-            dispatch(removeToken());
-          })
-          .catch((error) => {
-            console.error('Logout failed', error);
-            dispatch(removeToken());
-          })
-          .finally(() => {
-            setLoading(false);
-            navigate('/admin-login');
-          });
+        dispatch(removeToken());
+        dispatch(removeUserLevel());
+        setLoading(false);
+        navigate('/admin-login');
       }
     });
   };
-
-  if (loading) {
-    return <LoadingButton />;
-  }
 
   return (
     <nav className={`${navbarClasses} p-4 flex justify-between items-center`}>
@@ -122,7 +104,10 @@ const AdminNavBar = () => {
             👋
           </div>
           <div className='text-xl drop-shadow-xl'>{worldEmoji}</div>
-          <span className='px-2 font-extrabold text-xl'>
+          <span
+            className='ml-2 font-extrabold text-md'
+            style={{ fontFamily: '"Fira Code", monospace' }}
+          >
             'Hello, World!' Compendium
           </span>
         </div>
@@ -148,12 +133,14 @@ const AdminNavBar = () => {
           >
             Analytics
           </Link>
-          <Link
-            to='/admin-dashboard/users'
-            className='font-bold text-lg text-indigo-900 dark:text-emerald-400 hover:text-indigo-700 dark:hover:text-emerald-300 drop-shadow-sm'
-          >
-            Users
-          </Link>
+          {userLevel === 'super' && (
+            <Link
+              to='/admin-dashboard/users'
+              className='font-bold text-lg text-indigo-900 dark:text-emerald-400 hover:text-indigo-700 dark:hover:text-emerald-300 drop-shadow-sm'
+            >
+              Users
+            </Link>
+          )}
         </div>
       )}
 

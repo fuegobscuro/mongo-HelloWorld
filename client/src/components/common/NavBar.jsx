@@ -59,7 +59,7 @@ const NavBar = () => {
       : 'bg-emerald-400 text-gray-900 drop-shadow-xl';
 
   return (
-    <nav className={`${navbarClasses} p-4 flex justify-between items-center `}>
+    <nav className={`${navbarClasses} p-4 flex justify-between items-center`}>
       <Link
         to='/'
         title='Return Home'
@@ -75,7 +75,10 @@ const NavBar = () => {
             👋
           </div>
           <div className='text-xl drop-shadow-xl'>{worldEmoji}</div>
-          <span className='px-2 font-extrabold text-xl'>
+          <span
+            className='ml-2 font-extrabold text-md'
+            style={{ fontFamily: '"Fira Code", monospace' }}
+          >
             'Hello, World!' Compendium
           </span>
         </div>
