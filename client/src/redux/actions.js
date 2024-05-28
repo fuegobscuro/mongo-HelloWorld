@@ -1,4 +1,4 @@
-// Action Types
+// ACTION TYPES:
 // PROGRAMMING LANGUAGES
 export const FETCH_LANGUAGES_REQUEST = 'FETCH_LANGUAGES_REQUEST';
 export const FETCH_LANGUAGES_SUCCESS = 'FETCH_LANGUAGES_SUCCESS';
@@ -19,17 +19,22 @@ export const FETCH_CONTACT_MESSAGES_SUCCESS = 'FETCH_CONTACT_MESSAGES_SUCCESS';
 export const FETCH_CONTACT_MESSAGES_FAILURE = 'FETCH_CONTACT_MESSAGES_FAILURE';
 export const CREATE_CONTACT_MESSAGE = 'CREATE_CONTACT_MESSAGE';
 export const DELETE_CONTACT_MESSAGE = 'DELETE_CONTACT_MESSAGE';
-// AUTH
+// AUTH: TOKEN & USER LEVEL
 export const SET_TOKEN = 'SET_TOKEN';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
 export const SET_USER_LEVEL = 'SET_USER_LEVEL';
 export const REMOVE_USER_LEVEL = 'REMOVE_USER_LEVEL';
-// HOME FILTERS
-export const SET_FILTERED_LANGUAGES = 'SET_FILTERED_LANGUAGES';
+// SORTING
+export const SET_SORT_ORDER = 'SET_SORT_ORDER';
+// FILTERS
 export const SET_YEAR_FILTER = 'SET_YEAR_FILTER';
 export const SET_TIOBE_FILTER = 'SET_TIOBE_FILTER';
+// SEARCH
+export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY';
+// HOME PAGINATION
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 
-// Action Creators
+// ACTION CREATORS:
 // PROGRAMMING LANGUAGES
 export const fetchLanguagesRequest = () => ({
   type: FETCH_LANGUAGES_REQUEST,
@@ -101,7 +106,7 @@ export const deleteContactMessage = (id) => ({
   payload: id,
 });
 
-// AUTH
+// AUTH: TOKEN & USER LEVEL
 export const setToken = (token) => ({
   type: SET_TOKEN,
   payload: token,
@@ -118,18 +123,30 @@ export const removeUserLevel = () => ({
   type: REMOVE_USER_LEVEL,
 });
 
-// HOME FILTERS
-export const setFilteredLanguages = (languages) => ({
-  type: SET_FILTERED_LANGUAGES,
-  payload: languages,
+// LANGUAGE SORTING
+export const setSortOrder = (sortOrder) => ({
+  type: SET_SORT_ORDER,
+  payload: sortOrder,
 });
 
+// LANGUAGE FILTERS
 export const setYearFilter = (min, max) => ({
   type: SET_YEAR_FILTER,
   payload: { min, max },
 });
-
 export const setTiobeFilter = (min, max) => ({
   type: SET_TIOBE_FILTER,
   payload: { min, max },
+});
+
+// SEARCH
+export const setSearchQuery = (query) => ({
+  type: SET_SEARCH_QUERY,
+  payload: query,
+});
+
+// HOME PAGINATION
+export const setCurrentPage = (page) => ({
+  type: SET_CURRENT_PAGE,
+  payload: page,
 });

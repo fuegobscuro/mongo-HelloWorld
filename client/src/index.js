@@ -5,6 +5,7 @@ import './index.css';
 import { ThemeProvider } from './components/common/ThemeContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <ThemeProvider>

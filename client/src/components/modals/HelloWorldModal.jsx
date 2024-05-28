@@ -9,7 +9,7 @@ const HelloWorldModal = ({ onClose, children, langName }) => {
         }
         style={{ width: '80%', maxWidth: '640px' }}
       >
-        <div className='flex justify-between items-center mb-1'>
+        <div className='flex justify-between items-center text-center mb-1'>
           <h3 className='text-lg leading-6 font-medium text-gray-900 dark:text-white'>
             Here's a <b>'Hello, World!'</b> in{' '}
             <b className='text-indigo-800 text-xl dark:text-emerald-600'>

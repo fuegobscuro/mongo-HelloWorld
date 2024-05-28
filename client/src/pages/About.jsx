@@ -30,7 +30,7 @@ const About = () => {
       {!allImagesLoaded && <LoadingButton />}
 
       <div className='bg-white dark:bg-gray-800 rounded-xl px-4 py-3 drop-shadow-md'>
-        <div className='flex flex-wrap justify-center items-center w-full'>
+        <div className='flex flex-row justify-center items-center w-full'>
           {/* Ignacio Fosco's Box */}
           <div className='flex flex-col items-center bg-green-100 dark:bg-blue-900 rounded-xl p-3 drop-shadow-md m-3'>
             <img
@@ -75,7 +75,7 @@ const About = () => {
               </a>
             </div>
           </div>
-
+          {/* Dark Baby Luna's Box */}
           <div className='flex flex-col items-center bg-green-100 dark:bg-blue-900 rounded-xl p-3 drop-shadow-md m-3'>
             <img
               src={darkBabyLunaPic}
@@ -85,7 +85,7 @@ const About = () => {
             />
             <p className='text-md mb-2 text-center'>
               <span className='font-bold text-md text-indigo-900 dark:text-yellow-400'>
-                QA Specialist:{' '}
+                Q.A. Specialist:{' '}
               </span>
               <b>Dark Baby Luna</b> 🐈🐾
             </p>
@@ -101,76 +101,121 @@ const About = () => {
               />
             </a>
           </div>
-        </div>{' '}
+        </div>
+
+        {/* Tech Stack Used */}
         <h2 className='text-2xl font-bold text-center mb-2'>Tech Stack Used</h2>
-        <div className='flex flex-col items-center bg-green-100 dark:bg-blue-900 rounded-xl px-2.5 py-2.5 drop-shadow-md m-3'>
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-16'>
-            <div className='space-y-2 text-left justify-center'>
-              <p className='font-bold text-md text-indigo-900 dark:text-yellow-400 justify-center'>
+        <div className='flex flex-col items-center align-center bg-green-100 dark:bg-blue-900 rounded-xl px-2.5 py-2.5 drop-shadow-md m-3'>
+          <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
+            <div className='space-y-1 space-x-1 text-left justify-center'>
+              <p className='font-bold text-md text-indigo-900 dark:text-yellow-400 text-center'>
                 Language:
               </p>
-              <i className='devicon-javascript-plain colored text-2xl drop-shadow-sm'></i>{' '}
-              <span className='text-md'>JavaScript</span>
-              <p className='font-bold text-md text-indigo-900 dark:text-yellow-400 mt-4 mb-2'>
+              <i className='devicon-javascript-plain colored text-2xl drop-shadow-sm'></i>
+              <span className='text-sm'>JavaScript</span>
+              <p className='font-bold text-md text-indigo-900 dark:text-yellow-400 mt-4 mb-2 text-center'>
                 Front-end:
               </p>
-              <i className='devicon-react-original colored text-2xl drop-shadow-sm'></i>{' '}
-              <span className='text-md'>React</span>
+              <i className='devicon-react-original colored text-2xl drop-shadow-sm'></i>
+              <span className='text-sm'>React</span>
               <br />
-              <i className='devicon-tailwindcss-plain colored text-2xl drop-shadow-sm'></i>{' '}
-              <span className='text-md'>TailwindCSS</span>
+              <i className='devicon-redux-original colored text-2xl drop-shadow-sm'></i>
+              <span className='text-sm'>Redux</span>
               <br />
-              <i className='devicon-postcss-plain colored text-2xl drop-shadow-sm'></i>{' '}
-              <span className='text-md'>PostCSS</span>
+              <i className='devicon-tailwindcss-original colored text-2xl drop-shadow-sm'></i>
+              <span className='text-sm'>TailwindCSS</span>
             </div>
-
-            <div className='space-y-2 text-left'>
-              {' '}
-              {/* Back-end */}
-              <p className='font-bold text-md text-indigo-900 dark:text-yellow-400'>
-                Back-end:
+            {/* Back-end */}
+            <div className='space-y-1 space-x-1 text-left justify-center'>
+              <p className='font-bold text-md text-indigo-900 dark:text-yellow-400 text-center'>
+                Back-end & Database:
               </p>
-              <i className='devicon-express-original colored text-2xl drop-shadow-sm dark:invert'></i>{' '}
-              <span className='text-md'>Express.js</span>
+              <i className='devicon-vercel-original colored text-2xl drop-shadow-sm dark:invert'></i>
+              <span className='text-sm'>Vercel</span>
               <br />
-              <i className='devicon-nodejs-plain colored text-2xl drop-shadow-sm'></i>{' '}
-              <span className='text-md'>Node.js</span>
+              <i className='devicon-nodejs-plain colored text-2xl drop-shadow-sm'></i>
+              <span className='text-sm'>Node.js</span>
               <br />
-              <i className='devicon-mongodb-plain colored text-2xl drop-shadow-sm'></i>{' '}
-              <span className='text-md'>MongoDB</span>
+              <i className='devicon-mongodb-plain colored text-2xl drop-shadow-sm'></i>
+              <span className='text-sm'>MongoDB</span>
               <br />
-              <i className='devicon-mongoose-original colored text-2xl drop-shadow-sm dark:invert'></i>{' '}
-              <span className='text-md'>Mongoose</span>
+              <i className='devicon-mongoose-original text-2xl drop-shadow-sm '></i>
+              <span className='text-sm'>Mongoose</span>
             </div>
+            {/* Libraries & Tools */}
 
-            <div className='space-y-2 text-left'>
-              {' '}
-              {/* Libraries & Tools */}
-              <p className='font-bold text-md text-indigo-900 dark:text-yellow-400'>
+            <div className='space-y-1 space-x-1 justify-center'>
+              <p className='font-bold text-md text-indigo-900 dark:text-yellow-400 text-center'>
                 Libraries & Tools:
               </p>
-              <i className='devicon-axios-plain colored text-2xl drop-shadow-sm dark:invert'></i>{' '}
-              <span className='text-md mb-2'>Axios</span>
-              <br />
-              <i className='devicon-git-plain colored text-2xl drop-shadow-sm'></i>{' '}
-              <span className='text-md mb-2'>Git</span>
-              <br />
-              <i className='devicon-devicon-plain colored text-2x1 drop-shadow-sm'></i>{' '}
-              <span className='text-md mb-2'>Devicon</span>
+              <i className='devicon-axios-plain colored text-2xl drop-shadow-sm dark:invert'></i>
+              <span className='text-sm mb-2'>Axios</span>
               <br />
               <img
-                src='https://cdn.simpleicons.org/simpleicons/#111111'
-                alt='Simple Icons icon'
-                className='h-6 w-6 inline mb-2 drop-shadow-sm dark:invert'
-              />{' '}
-              <span className='text-md'>Simple Icons</span>
+                src='https://cdn.simpleicons.org/passport/#34E27A'
+                alt='Passport icon'
+                className='h-5 w-5 inline mb-2 drop-shadow-sm'
+              />
+              <span className='text-sm'>Passport</span>
+              <br />
+              <img
+                src='https://cdn.simpleicons.org/jsonwebtokens/#000000'
+                alt='JWT icon'
+                className='h-5 w-5 inline mb-2 drop-shadow-sm dark:invert'
+              />
+              <span className='text-sm'>JWT</span>
+              <br />
+              <img
+                src='https://cdn.simpleicons.org/googleanalytics/#E37400'
+                alt='Google Analytics icon'
+                className='h-5 w-5 inline mb-2 drop-shadow-sm'
+              />
+              <span className='text-sm'>Google Analytics</span>
               <br />
               <img
                 src='https://avatars.githubusercontent.com/u/68967643?s=200&v=4'
                 alt='Syntax Highlighter icon'
-                className='h-6 w-6 inline rounded-full drop-shadow-sm'
-              />{' '}
-              <span className='text-md mb-2'>Syntax Highlighter</span>
+                className='h-5 w-5 inline rounded-full drop-shadow-sm'
+              />
+              <span className='text-sm mb-2'>Syntax Highlighter</span>
+            </div>
+
+            <div className='space-y-1 space-x-1 justify-center'>
+              <br />
+              <img
+                src='https://cdn.simpleicons.org/simpleicons/#111111'
+                alt='Simple Icons icon'
+                className='h-5 w-5 inline mb-2 drop-shadow-sm dark:invert'
+              />
+              <span className='text-sm'>Simple Icons</span>
+              <br />
+              <i className='devicon-devicon-plain colored text-2x1 drop-shadow-sm'></i>
+              <span className='text-sm mb-2'>Devicon</span>
+              <br />
+
+              <div>
+                <p className='font-bold text-md text-indigo-900 dark:text-yellow-400 justify-center'>
+                  Fonts:
+                </p>
+
+                <span
+                  style={{ fontFamily: '"Source Sans Pro"' }}
+                  className='text-sm'
+                >
+                  Source Sans Pro
+                </span>
+                <br />
+                <span
+                  style={{ fontFamily: '"Source Serif Pro"' }}
+                  className='text-sm'
+                >
+                  Source Serif Pro
+                </span>
+                <br />
+                <span style={{ fontFamily: '"Fira Code"' }} className='text-sm'>
+                  Fira Code
+                </span>
+              </div>
             </div>
           </div>
         </div>

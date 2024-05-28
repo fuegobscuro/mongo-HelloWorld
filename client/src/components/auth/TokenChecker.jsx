@@ -14,7 +14,7 @@ const TokenChecker = () => {
   const dispatch = useDispatch();
   const reduxToken = useSelector((state) => state.token); // Always call useSelector
   const localStorageToken = localStorage.getItem('token');
-  const token = localStorageToken || reduxToken; // Use either local storage token or redux token
+  const token = localStorageToken || reduxToken;
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
 

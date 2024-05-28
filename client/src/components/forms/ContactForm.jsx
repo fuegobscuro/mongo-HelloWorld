@@ -50,7 +50,7 @@ const ContactForm = () => {
   });
 
   return (
-    <div className='max-w-xl mx-auto bg-green-100 dark:bg-gray-800 shadow-md drop-shadow-md rounded-lg p-6'>
+    <div className='max-w-xl h-4/5 mx-auto bg-green-100 dark:bg-gray-800 shadow-md drop-shadow-md rounded-lg p-6'>
       <form onSubmit={formik.handleSubmit} className='space-y-4'>
         <div>
           <div>

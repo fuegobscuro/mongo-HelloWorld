@@ -12,7 +12,7 @@ const Contact = () => {
   return (
     <div
       style={mainContentStyle}
-      className='bg-gray-200 dark:bg-gray-200 px-4 py-12 overflow-auto'
+      className='justify-top bg-gray-200 dark:bg-gray-200 p-6 overflow-auto'
     >
       <ContactForm />
 

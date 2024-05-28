@@ -28,22 +28,10 @@ axios.defaults.withCredentials = true;
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 function App() {
-  // const reduxToken = useSelector((state) => state.token);
-  // const localStorageToken = localStorage.getItem('token');
-  // const token = localStorageToken || reduxToken;
-  // console.log(store); // Check if the store is defined
-  // console.log(reduxToken); // Check what's fetched from the store
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCode, setCurrentCode] = useState('');
   const [currentLang, setCurrentLang] = useState('');
   const [currentLangName, setCurrentLangName] = useState('');
-
-  // useEffect(() => {
-  //   if (token) {
-  //     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  //   }
-  // }, [token]);
 
   const openModalWithCode = (code, codeLang, langName) => {
     setCurrentCode(code);
